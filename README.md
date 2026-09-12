@@ -26,7 +26,7 @@ EduMarket is a peer-to-peer student marketplace designed to help university and 
 ## 🛠️ Tech Stack
 
 - **Frontend**: HTML5, CSS3 (Custom styling)
-- **Backend**: PHP
+- **Backend**: PHP, Python
 - **Server Environment**: Apache / XAMPP
 
 ---
