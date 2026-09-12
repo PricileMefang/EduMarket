@@ -1,3 +1,6 @@
+<?php
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +11,6 @@
     <title>EduMarket|Register </title>
 </head>
 <body>
-
         <header class="site-header">
             <div class="header-inner">
                 <a href="index.html" class="logo-link">
