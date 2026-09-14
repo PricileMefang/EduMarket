@@ -264,19 +264,44 @@ $activeTab = $_GET['tab'] ?? 'notifications';
                         </div>
                     </div>
 
-                    <!-- TAB 6: Direct In-App Payment (No Chat) -->
+                    <!-- TAB 6: MTN MoMo & Orange Money Sandbox Payment Hub -->
                     <div id="tab-payment" class="dash-tab-content <?php echo ($activeTab === 'payment') ? 'active' : ''; ?>">
-                        <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-sm);">
-                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                                <div style="width: 44px; height: 44px; border-radius: 12px; background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">💳</div>
-                                <div>
-                                    <h2 style="font-size: 1.5rem;">Direct In-App Checkout</h2>
-                                    <p style="color: var(--text-muted); font-size: 0.92rem;">Skip WhatsApp chatting and pay instantly with mobile money.</p>
+                        <div style="background: #ffffff; border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-sm); margin-bottom: 24px;">
+                            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 16px;">
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div style="width: 46px; height: 46px; border-radius: 12px; background: var(--primary-light); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">💳</div>
+                                    <div>
+                                        <h2 style="font-size: 1.5rem;">MTN MoMo & Orange Money Sandbox Gateway</h2>
+                                        <p style="color: var(--text-muted); font-size: 0.92rem;">Direct in-app student payments with instant campus escrow protection.</p>
+                                    </div>
+                                </div>
+                                <span class="momo-sandbox-badge">⚡ Sandbox Active</span>
+                            </div>
+
+                            <!-- Linked Student Wallets -->
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px;">
+                                <div style="background: #fffbeb; border: 2px solid #fde047; padding: 18px; border-radius: var(--radius-md);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <strong style="color: #854d0e; font-size: 0.95rem;">🟡 MTN Mobile Money</strong>
+                                        <span style="font-size: 0.75rem; background: #fef08a; padding: 2px 8px; border-radius: 999px; font-weight: 700; color: #713f12;">Connected</span>
+                                    </div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: #0f172a;">+237 677 12 34 56</div>
+                                    <div style="font-size: 0.8rem; color: #a16207; margin-top: 4px;">Sandbox Balance: 150,000 FCFA</div>
+                                </div>
+
+                                <div style="background: #fff7ed; border: 2px solid #fdba74; padding: 18px; border-radius: var(--radius-md);">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <strong style="color: #9a3412; font-size: 0.95rem;">🟠 Orange Money</strong>
+                                        <span style="font-size: 0.75rem; background: #fed7aa; padding: 2px 8px; border-radius: 999px; font-weight: 700; color: #7c2d12;">Connected</span>
+                                    </div>
+                                    <div style="font-size: 1.1rem; font-weight: 700; color: #0f172a;">+237 690 98 76 54</div>
+                                    <div style="font-size: 0.8rem; color: #c2410c; margin-top: 4px;">Sandbox Balance: 85,000 FCFA</div>
                                 </div>
                             </div>
 
+                            <!-- Direct Item Checkout Simulator -->
                             <div style="background: var(--bg-alt); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-subtle); margin-bottom: 24px;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 10px;">Select an Item to Buy Instantly:</h4>
+                                <h4 style="font-size: 0.95rem; margin-bottom: 10px;">Select an Item to Buy via MoMo/OM:</h4>
                                 <select id="direct-pay-select" class="form-control form-select" onchange="previewDirectPayItem(this.value)">
                                     <!-- Populated dynamically -->
                                 </select>
@@ -290,16 +315,17 @@ $activeTab = $_GET['tab'] ?? 'notifications';
                                 </div>
                                 <div>
                                     <div id="dp-price" style="font-size: 1.3rem; font-weight: 800; color: var(--primary);">5,000 FCFA</div>
-                                    <button id="dp-btn-trigger" class="btn btn-primary btn-sm" style="margin-top: 4px;">💳 Pay With MoMo / OM</button>
+                                    <button id="dp-btn-trigger" class="btn btn-primary btn-sm" style="margin-top: 4px;">💳 Launch MoMo / OM Checkout</button>
                                 </div>
                             </div>
 
                             <div style="border-top: 1px solid var(--border-subtle); padding-top: 20px;">
-                                <h4 style="font-size: 0.95rem; margin-bottom: 8px;">Direct In-App Escrow Guarantee:</h4>
+                                <h4 style="font-size: 0.95rem; margin-bottom: 8px;">How MTN & Orange Money Direct Pay Works:</h4>
                                 <ol style="padding-left: 20px; font-size: 0.88rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 8px;">
-                                    <li>Pay securely using <strong>MTN MoMo</strong> or <strong>Orange Money</strong>.</li>
-                                    <li>A unique <strong>Pickup Passcode</strong> is generated and placed in your 'Things Bought' tab.</li>
-                                    <li>Present code when collecting item from peer.</li>
+                                    <li>Enter your Cameroon MTN or Orange Money number (e.g. 677 12 34 56 or 690 98 76 54).</li>
+                                    <li>Confirm the interactive USSD PIN prompt on your screen to authorize payment.</li>
+                                    <li>A unique <strong>Campus Pickup Passcode</strong> is generated and placed in your 'Things Bought' tab.</li>
+                                    <li>Meet your peer at the designated campus zone, inspect the item, and share your code to collect!</li>
                                 </ol>
                             </div>
                         </div>

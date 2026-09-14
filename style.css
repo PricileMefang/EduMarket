@@ -12,6 +12,11 @@
     --primary-border: #ccfbf1;
     --primary-gradient: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
     
+    /* Payment Brands */
+    --mtn-yellow: #ffcc00;
+    --mtn-dark: #003366;
+    --orange-color: #ff6600;
+    
     --accent: #f59e0b;
     --accent-hover: #d97706;
     --accent-light: #fffbeb;
@@ -114,18 +119,17 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   Header & Navigation (Clean Logo Image Only)
+   Header & Navigation (Clean Standalone Logo Image)
    ========================================================================== */
 .site-header {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.96);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border-bottom: 1px solid var(--border-subtle);
     box-shadow: var(--shadow-sm);
-    transition: all 0.3s ease;
     width: 100%;
 }
 
@@ -133,7 +137,7 @@ button, input, select, textarea {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 80px;
+    height: 76px;
     gap: 20px;
 }
 
@@ -144,17 +148,16 @@ button, input, select, textarea {
 }
 
 .logo-img {
-    height: 54px;
+    height: 52px;
     width: auto;
     object-fit: contain;
     transition: transform 0.2s ease;
 }
 
 .logo-wrapper:hover .logo-img {
-    transform: scale(1.03);
+    transform: scale(1.04);
 }
 
-/* Search bar in header */
 .header-search {
     flex: 1;
     max-width: 420px;
@@ -201,7 +204,6 @@ button, input, select, textarea {
     align-items: center;
 }
 
-/* Nav links */
 .nav-menu {
     display: flex;
     align-items: center;
@@ -232,7 +234,6 @@ button, input, select, textarea {
     border-radius: var(--radius-full);
 }
 
-/* Header Actions */
 .header-actions {
     display: flex;
     align-items: center;
@@ -663,7 +664,7 @@ button, input, select, textarea {
     position: absolute;
     top: 12px;
     left: 12px;
-    background: rgba(15, 23, 42, 0.8);
+    background: rgba(15, 23, 42, 0.85);
     backdrop-filter: blur(6px);
     color: #ffffff;
     font-size: 0.72rem;
@@ -955,39 +956,6 @@ button, input, select, textarea {
     box-shadow: var(--shadow-sm);
 }
 
-/* Payment Method Selection Card */
-.payment-method-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 14px;
-    background: var(--bg-alt);
-    border: 2px solid var(--border-subtle);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.payment-method-card.active {
-    border-color: var(--primary);
-    background: var(--primary-light);
-}
-
-/* Spinner */
-.spinner-pay {
-    width: 50px;
-    height: 50px;
-    border: 5px solid var(--border-subtle);
-    border-top-color: var(--primary);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 /* Liked Items Buyer Badge */
 .buyer-count-badge {
     display: inline-flex;
@@ -1011,6 +979,135 @@ button, input, select, textarea {
     border: 1px solid var(--border-subtle);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
+}
+
+/* ==========================================================================
+   MTN MoMo & Orange Money Sandbox Simulator UI
+   ========================================================================== */
+.momo-sandbox-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #fef08a;
+    border: 1px solid #fde047;
+    color: #854d0e;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.payment-method-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #ffffff;
+    border: 2px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.payment-method-card.active.momo {
+    border-color: var(--mtn-yellow);
+    background: #fffbeb;
+    box-shadow: 0 4px 14px rgba(254, 240, 138, 0.4);
+}
+
+.payment-method-card.active.om {
+    border-color: var(--orange-color);
+    background: #fff7ed;
+    box-shadow: 0 4px 14px rgba(255, 102, 0, 0.15);
+}
+
+/* Phone Sandbox Screen Overlay */
+.ussd-phone-mockup {
+    background: #0f172a;
+    border-radius: 24px;
+    padding: 24px 20px;
+    color: #ffffff;
+    max-width: 360px;
+    margin: 0 auto 20px;
+    box-shadow: var(--shadow-xl);
+    border: 3px solid #334155;
+    text-align: center;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.85); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.ussd-prompt-box {
+    background: #1e293b;
+    border: 1px solid #475569;
+    border-radius: 14px;
+    padding: 18px;
+    margin-bottom: 16px;
+    font-family: monospace;
+    font-size: 0.9rem;
+    text-align: left;
+    line-height: 1.4;
+}
+
+.ussd-pin-input {
+    width: 100%;
+    padding: 12px;
+    text-align: center;
+    letter-spacing: 8px;
+    font-size: 1.4rem;
+    font-weight: 800;
+    border-radius: var(--radius-sm);
+    background: #0f172a;
+    border: 1.5px solid #64748b;
+    color: #ffffff;
+    margin-bottom: 14px;
+}
+
+.ussd-pin-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.3);
+}
+
+.quick-sandbox-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+.sandbox-chip-btn {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    background: var(--bg-alt);
+    border: 1px solid var(--border-subtle);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.sandbox-chip-btn:hover {
+    background: #e2e8f0;
+}
+
+/* Spinner */
+.spinner-pay {
+    width: 48px;
+    height: 48px;
+    border: 4px solid var(--border-subtle);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* ==========================================================================
@@ -1043,7 +1140,7 @@ button, input, select, textarea {
     background: #ffffff;
     border-radius: var(--radius-xl);
     width: 100%;
-    max-width: 640px;
+    max-width: 560px;
     max-height: 90vh;
     overflow-y: auto;
     box-shadow: var(--shadow-xl);

@@ -139,12 +139,15 @@ $productId = isset($_GET['id']) ? intval($_GET['id']) : 1;
 
                     <!-- Direct Action Buttons -->
                     <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;">
-                        <a id="detail-wa-btn" href="#" target="_blank" class="btn btn-primary btn-lg btn-full" style="font-size: 1.1rem;">
-                            💬 Direct WhatsApp Message
+                        <button id="detail-momo-pay-btn" class="btn btn-primary btn-lg btn-full" style="font-size: 1.1rem; background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);">
+                            💳 Direct MoMo / Orange Money Checkout
+                        </button>
+                        <a id="detail-wa-btn" href="#" target="_blank" class="btn btn-secondary btn-lg btn-full">
+                            💬 Or Chat with Seller on WhatsApp
                         </a>
                         <div style="display: flex; gap: 12px;">
-                            <button id="detail-add-cart-btn" class="btn btn-secondary btn-lg" style="flex: 1;">🛒 Add to Cart</button>
-                            <button id="detail-wishlist-btn" class="btn btn-outline btn-lg" style="flex: 1;">❤️ Save Item</button>
+                            <button id="detail-add-cart-btn" class="btn btn-secondary" style="flex: 1;">🛒 Add to Cart</button>
+                            <button id="detail-wishlist-btn" class="btn btn-outline" style="flex: 1;">❤️ Save to Liked</button>
                         </div>
                     </div>
 
@@ -279,7 +282,8 @@ $productId = isset($_GET['id']) ? intval($_GET['id']) : 1;
             const waUrl = `https://wa.me/${cleanPhone}?text=Hello%2C%20I%20saw%20your%20listing%20on%20EduMarket%3A%20${encodeURIComponent(product.title)}%20(${product.price.toLocaleString()}%20FCFA).%20Is%20it%20still%20available%3F`;
             document.getElementById('detail-wa-btn').href = waUrl;
 
-            // Add to cart & wishlist triggers
+            // MoMo & Cart & Wishlist triggers
+            document.getElementById('detail-momo-pay-btn').onclick = () => openPaymentModal(product.id);
             document.getElementById('detail-add-cart-btn').onclick = () => addToCart(product.id);
             document.getElementById('detail-wishlist-btn').onclick = function() {
                 toggleWishlist(product.id, this);

@@ -1,5 +1,5 @@
 /**
- * EduMarket - Core Frontend Interactive Application & Personal Student Store
+ * EduMarket - Core Frontend Interactive Application & Mobile Money Sandbox Gateway
  */
 
 const EduMarketData = {
@@ -106,41 +106,6 @@ const EduMarketData = {
             verified: true,
             description: "Compact foldable wooden desk with an adjustable LED desk lamp. Fits smoothly inside any student hostel room."
         }
-    ],
-
-    studentPeers: [
-        {
-            name: "Mefang Pricile",
-            role: "Science & Math Tutor / Seller",
-            campus: "University of Douala",
-            phone: "+237690123456",
-            status: "Online",
-            specialty: "Calculus, Physics Textbooks & Notes"
-        },
-        {
-            name: "Emmanuel Kouam",
-            role: "Tech Lead & Gadget Seller",
-            campus: "University of Buea",
-            phone: "+237671234567",
-            status: "Online",
-            specialty: "Laptops, Flash drives & Accessories"
-        },
-        {
-            name: "Diane Ngo",
-            role: "Engineering Rep",
-            campus: "Polytech Douala",
-            phone: "+237682345678",
-            status: "Away",
-            specialty: "Scientific Calculators & Drawing Kits"
-        },
-        {
-            name: "Kevin Tchinda",
-            role: "Civil Engineering Peer",
-            campus: "ENSTP Yaoundé",
-            phone: "+237699887766",
-            status: "Online",
-            specialty: "Solved Past Exams & Notes"
-        }
     ]
 };
 
@@ -149,7 +114,6 @@ const Store = {
     getUser: () => {
         let user = JSON.parse(localStorage.getItem('edumarket_user') || 'null');
         if (!user) {
-            // Default active demo user session
             user = {
                 name: "Pricile Mefang",
                 email: "pricile.mefang@univ-douala.cm",
@@ -178,30 +142,23 @@ const Store = {
             notifs = [
                 {
                     id: 1,
-                    title: "🎉 Listing Sold!",
-                    message: "A student from Polytech purchased your 'Calculus Notes'. Pickup passcode: EDUM-4821.",
+                    title: "🎉 Item Sold on Campus!",
+                    message: "A student purchased your 'Calculus Notes'. Pickup passcode: EDUM-4821.",
                     time: "10 mins ago",
                     read: false
                 },
                 {
                     id: 2,
-                    title: "💳 Payment Received in Escrow",
-                    message: "+8,000 FCFA has been credited to your campus escrow wallet.",
+                    title: "💳 MoMo Escrow Credited",
+                    message: "+8,000 FCFA received via MTN Mobile Money Sandbox into campus escrow.",
                     time: "2 hours ago",
                     read: false
                 },
                 {
                     id: 3,
                     title: "💬 New Student Inquiry",
-                    message: "Emmanuel K. inquired about your HP Pavilion listing via WhatsApp.",
+                    message: "Emmanuel K. inquired about your HP Pavilion listing on WhatsApp.",
                     time: "1 day ago",
-                    read: true
-                },
-                {
-                    id: 4,
-                    title: "❤️ Price Drop Alert",
-                    message: "An item on your liked list 'Casio Scientific Calculator' dropped to 8,000 FCFA.",
-                    time: "2 days ago",
                     read: true
                 }
             ];
@@ -239,11 +196,13 @@ const Store = {
                     productId: 3,
                     title: "Casio FX-991EX ClassWiz Scientific Calculator",
                     price: 8000,
+                    provider: "MTN Mobile Money",
+                    phone: "677 12 34 56",
                     image: "images/casio.webp",
                     code: "EDUM-8391",
                     seller: "Diane N.",
                     campus: "Polytech Douala",
-                    status: "Ready for Pickup",
+                    status: "Ready for Campus Pickup",
                     date: "Today, 14:20"
                 }
             ];
@@ -255,12 +214,12 @@ const Store = {
         const orders = Store.getOrders();
         orders.unshift(order);
         localStorage.setItem('edumarket_orders', JSON.stringify(orders));
-        // Add notification for purchase
+        
         const notifs = Store.getNotifications();
         notifs.unshift({
             id: Date.now(),
-            title: "🛍️ Item Purchased Successfully",
-            message: `You purchased '${order.title}'. Present pickup code ${order.code} on campus.`,
+            title: `🛍️ ${order.provider} Payment Confirmed`,
+            message: `Paid ${order.price.toLocaleString()} FCFA for '${order.title}'. Present pickup code ${order.code} on campus.`,
             time: "Just now",
             read: false
         });
@@ -268,7 +227,7 @@ const Store = {
         Store.updateBadges();
     },
 
-    // User-specific Things Sold (Items Listed & Sold by this Student)
+    // User-specific Things Sold
     getSoldItems: () => {
         let sold = JSON.parse(localStorage.getItem('edumarket_sold_items') || 'null');
         if (!sold) {
@@ -300,11 +259,6 @@ const Store = {
         }
         return sold;
     },
-    addListing: (listing) => {
-        const sold = Store.getSoldItems();
-        sold.unshift(listing);
-        localStorage.setItem('edumarket_sold_items', JSON.stringify(sold));
-    },
 
     getCart: () => JSON.parse(localStorage.getItem('edumarket_cart') || '[]'),
     setCart: (items) => {
@@ -335,22 +289,15 @@ function showToast(message, type = 'success') {
     
     const toast = document.createElement('div');
     toast.className = 'toast';
-    const icon = type === 'success' ? '✓' : (type === 'pay' ? '💳' : 'ℹ');
-    toast.innerHTML = `<span style="font-size: 1.1rem;">${icon}</span> <span>${message}</span>`;
+    const icon = type === 'success' ? '✓' : (type === 'pay' ? '💳' : (type === 'error' ? '⚠️' : 'ℹ'));
+    toast.innerHTML = `<span style="font-size: 1.15rem;">${icon}</span> <span>${message}</span>`;
     container.appendChild(toast);
     
     setTimeout(() => toast.classList.add('show'), 50);
     setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
-    }, 3800);
-}
-
-// WhatsApp Launcher
-function openWhatsAppChat(phone, message) {
-    const cleanPhone = phone.replace(/[^0-9]/g, '');
-    const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    }, 4000);
 }
 
 // Cart & Wishlist Operations
@@ -400,8 +347,11 @@ function toggleWishlist(productId, btnElement) {
     }
 }
 
-// Direct In-App Payment Gateway Modal
+// ==========================================================================
+// MTN MoMo & Orange Money Sandbox Interactive Payment Gateway
+// ==========================================================================
 let currentPaymentProduct = null;
+let currentSelectedProvider = 'momo'; // 'momo' or 'om'
 
 function openPaymentModal(productId) {
     const product = EduMarketData.products.find(p => p.id === productId);
@@ -417,13 +367,14 @@ function openPaymentModal(productId) {
     document.getElementById('pay-item-title').textContent = product.title;
     document.getElementById('pay-item-price').textContent = product.price.toLocaleString() + ' FCFA';
     document.getElementById('pay-item-seller').textContent = product.seller;
-    document.getElementById('pay-item-campus').textContent = product.campus;
+    document.getElementById('pay-item-campus').textContent = product.campus.split('(')[0];
     document.getElementById('pay-item-img').src = product.image;
 
-    // Reset view
+    // Reset to Step 1 Form
     document.getElementById('pay-form-view').style.display = 'block';
-    document.getElementById('pay-processing-view').style.display = 'none';
+    document.getElementById('pay-ussd-view').style.display = 'none';
     document.getElementById('pay-success-view').style.display = 'none';
+    document.getElementById('pay-error-view').style.display = 'none';
 
     modal.classList.add('open');
 }
@@ -434,140 +385,256 @@ function createPaymentModalDOM() {
             <div class="modal-content" style="max-width: 520px;">
                 <button class="modal-close-btn" onclick="closeModal('payment-gateway-modal')">✕</button>
                 
-                <!-- View 1: Payment Selection -->
+                <!-- STEP 1: Method & Number Selection -->
                 <div id="pay-form-view">
-                    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-                        <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 1.2rem;">💳</div>
-                        <div>
-                            <h3 style="font-size: 1.25rem;">Direct In-App Checkout</h3>
-                            <p style="font-size: 0.82rem; color: var(--text-muted);">Buy directly without needing to chat with seller</p>
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 40px; height: 40px; border-radius: 10px; background: var(--primary-light); display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">💳</div>
+                            <div>
+                                <h3 style="font-size: 1.25rem;">MoMo / OM Direct Checkout</h3>
+                                <p style="font-size: 0.8rem; color: var(--text-muted);">Instant campus escrow without chatting</p>
+                            </div>
                         </div>
+                        <span class="momo-sandbox-badge">⚡ Sandbox Active</span>
                     </div>
 
-                    <div style="display: flex; gap: 12px; padding: 12px; background: var(--bg-alt); border-radius: var(--radius-md); align-items: center; margin-bottom: 20px;">
-                        <img id="pay-item-img" src="" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px;">
+                    <!-- Item Summary Card -->
+                    <div style="display: flex; gap: 12px; padding: 12px; background: var(--bg-alt); border-radius: var(--radius-md); align-items: center; margin-bottom: 18px;">
+                        <img id="pay-item-img" src="" style="width: 58px; height: 58px; object-fit: cover; border-radius: 8px;">
                         <div style="flex: 1;">
-                            <h4 id="pay-item-title" style="font-size: 0.95rem; margin-bottom: 2px;"></h4>
+                            <h4 id="pay-item-title" style="font-size: 0.95rem; margin-bottom: 2px; line-height: 1.3;"></h4>
                             <div style="font-size: 0.8rem; color: var(--text-muted);">Seller: <strong id="pay-item-seller"></strong> (<span id="pay-item-campus"></span>)</div>
                         </div>
-                        <div id="pay-item-price" style="font-size: 1.15rem; font-weight: 800; color: var(--primary);"></div>
+                        <div id="pay-item-price" style="font-size: 1.2rem; font-weight: 800; color: var(--primary);"></div>
                     </div>
 
+                    <!-- Payment Provider Selector -->
                     <div class="form-group">
-                        <label class="form-label">Select Payment Method</label>
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
-                            <label class="payment-method-card active" onclick="selectPayMethod('momo', this)">
-                                <input type="radio" name="pay_method" value="momo" checked style="display: none;">
-                                <span style="font-size: 1.2rem;">📱</span>
+                        <label class="form-label">Select Mobile Money Provider:</label>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <label id="momo-card-btn" class="payment-method-card active momo" onclick="selectPayMethod('momo')">
+                                <input type="radio" name="pay_method_choice" value="momo" checked style="display: none;">
+                                <span style="font-size: 1.5rem;">🟡</span>
                                 <div>
-                                    <strong style="display:block; font-size: 0.9rem;">MTN MoMo</strong>
-                                    <span style="font-size: 0.75rem; color: var(--text-muted);">Mobile Money</span>
+                                    <strong style="display:block; font-size: 0.92rem; color: #003366;">MTN MoMo</strong>
+                                    <span style="font-size: 0.72rem; color: var(--text-muted);">MTN Collections API</span>
                                 </div>
                             </label>
 
-                            <label class="payment-method-card" onclick="selectPayMethod('om', this)">
-                                <input type="radio" name="pay_method" value="om" style="display: none;">
-                                <span style="font-size: 1.2rem;">🍊</span>
+                            <label id="om-card-btn" class="payment-method-card" onclick="selectPayMethod('om')">
+                                <input type="radio" name="pay_method_choice" value="om" style="display: none;">
+                                <span style="font-size: 1.5rem;">🟠</span>
                                 <div>
-                                    <strong style="display:block; font-size: 0.9rem;">Orange Money</strong>
-                                    <span style="font-size: 0.75rem; color: var(--text-muted);">OM Wallet</span>
+                                    <strong style="display:block; font-size: 0.92rem; color: #ea580c;">Orange Money</strong>
+                                    <span style="font-size: 0.72rem; color: var(--text-muted);">OM WebPay API</span>
                                 </div>
                             </label>
                         </div>
                     </div>
 
+                    <!-- Phone Input & Sandbox Quick Fill -->
                     <div class="form-group">
-                        <label class="form-label" for="pay-phone-num">Your Mobile Money Phone Number</label>
-                        <input type="tel" id="pay-phone-num" class="form-control" placeholder="e.g. 677 12 34 56" value="690123456" required>
+                        <label class="form-label" for="pay-phone-num">Enter Your Mobile Money Number (Cameroon +237):</label>
+                        <input type="tel" id="pay-phone-num" class="form-control" placeholder="e.g. 677 12 34 56" value="677123456" oninput="autoDetectProvider(this.value)">
+                        
+                        <div style="margin-top: 8px;">
+                            <span style="font-size: 0.75rem; color: var(--text-light); font-weight: 600;">Sandbox Test Numbers:</span>
+                            <div class="quick-sandbox-chips">
+                                <button type="button" class="sandbox-chip-btn" onclick="setSandboxNum('677123456', 'momo')">📱 677123456 (MTN Success)</button>
+                                <button type="button" class="sandbox-chip-btn" onclick="setSandboxNum('690987654', 'om')">🍊 690987654 (Orange Success)</button>
+                                <button type="button" class="sandbox-chip-btn" onclick="setSandboxNum('670000000', 'momo')">❌ 670000000 (Fail / No Funds)</button>
+                            </div>
+                        </div>
                     </div>
 
-                    <button onclick="processPayment()" class="btn btn-primary btn-full btn-lg">
-                        🔒 Authorize & Pay Now
+                    <button onclick="initiateSandboxPayment()" class="btn btn-primary btn-full btn-lg" style="margin-top: 6px;">
+                        🚀 Send Payment Request
                     </button>
                     <p style="font-size: 0.75rem; color: var(--text-light); text-align: center; margin-top: 10px;">
-                        Funds held in secure campus escrow until you collect the item from the student seller.
+                        🔒 Protected by Campus Escrow. Funds are released to student seller only upon confirmed pickup.
                     </p>
                 </div>
 
-                <!-- View 2: Processing Simulator -->
-                <div id="pay-processing-view" style="display: none; text-align: center; padding: 40px 10px;">
-                    <div class="spinner-pay" style="margin: 0 auto 20px;"></div>
-                    <h3 style="margin-bottom: 8px;">Waiting for PIN Approval...</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Please enter your mobile money secret PIN on your phone to confirm payment.</p>
+                <!-- STEP 2: Realistic Interactive USSD / MoMo Approval Prompt -->
+                <div id="pay-ussd-view" style="display: none; text-align: center;">
+                    <div class="ussd-phone-mockup">
+                        <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: #94a3b8; margin-bottom: 12px; border-bottom: 1px solid #334155; padding-bottom: 6px;">
+                            <span id="ussd-sim-name">SIM 1: MTN CAMEROON</span>
+                            <span>📶 4G LTE</span>
+                        </div>
+
+                        <div class="ussd-prompt-box">
+                            <div style="color: #38bdf8; font-weight: 700; margin-bottom: 6px;" id="ussd-header-text">MTN Mobile Money Approval (*126#)</div>
+                            <div id="ussd-body-text" style="color: #f1f5f9; font-size: 0.85rem;">
+                                Authorize payment of <strong id="ussd-price-val">5,000 FCFA</strong> to <strong>EduMarket Escrow</strong>.
+                            </div>
+                        </div>
+
+                        <div style="margin-bottom: 10px; font-size: 0.82rem; color: #cbd5e1;">
+                            Enter secret 4-digit PIN to confirm:
+                        </div>
+                        <input type="password" id="sandbox-pin-input" maxlength="4" class="ussd-pin-input" placeholder="••••" value="1234">
+                        
+                        <div style="display: flex; gap: 10px;">
+                            <button onclick="cancelPayment()" class="btn btn-secondary btn-sm" style="flex: 1; background: #334155; color: #fff; border-color: #475569;">Cancel</button>
+                            <button onclick="submitSandboxPIN()" class="btn btn-primary btn-sm" style="flex: 1.5; background: #0f766e;">Confirm & Pay</button>
+                        </div>
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">
+                        ⚡ Sandbox Simulation: Enter any 4-digit PIN (default <strong>1234</strong>) to authorize.
+                    </div>
                 </div>
 
-                <!-- View 3: Payment Success Receipt -->
-                <div id="pay-success-view" style="display: none; text-align: center; padding: 20px 10px;">
-                    <div style="font-size: 3.5rem; margin-bottom: 10px;">🎉</div>
-                    <h2 style="color: var(--success); font-size: 1.5rem; margin-bottom: 6px;">Payment Successful!</h2>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Your purchase is saved in your Dashboard. Show your pickup code to the student seller.</p>
+                <!-- STEP 3: Payment Success Receipt & Pickup Passcode -->
+                <div id="pay-success-view" style="display: none; text-align: center; padding: 10px;">
+                    <div style="font-size: 3.2rem; margin-bottom: 8px;">🎉</div>
+                    <h2 style="color: var(--success); font-size: 1.45rem; margin-bottom: 4px;">Payment Successful!</h2>
+                    <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 18px;">
+                        Funds credited to secure campus escrow. Your order has been placed in your Student Dashboard.
+                    </p>
                     
-                    <div style="background: var(--bg-alt); border: 2px dashed var(--primary); padding: 16px; border-radius: var(--radius-lg); margin-bottom: 20px; text-align: left;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.88rem;">
-                            <span>Pickup Passcode:</span>
-                            <strong id="receipt-passcode" style="font-size: 1.2rem; color: var(--primary); letter-spacing: 2px;">EDUM-9842</strong>
+                    <div style="background: var(--bg-alt); border: 2px dashed var(--primary); padding: 18px; border-radius: var(--radius-lg); margin-bottom: 20px; text-align: left;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem;">
+                            <span>Campus Pickup Passcode:</span>
+                            <strong id="receipt-passcode" style="font-size: 1.3rem; color: var(--primary); letter-spacing: 2px;">EDUM-9842</strong>
                         </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.88rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem;">
                             <span>Item:</span>
                             <strong id="receipt-item-name"></strong>
                         </div>
-                        <div style="display: flex; justify-content: space-between; font-size: 0.88rem;">
-                            <span>Meetup Location:</span>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem;">
+                            <span>Payment Method:</span>
+                            <strong id="receipt-provider-name" style="color: var(--primary);">MTN Mobile Money</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; font-size: 0.85rem;">
+                            <span>Campus Meetup:</span>
                             <span id="receipt-campus-location" style="color: var(--text-muted);"></span>
                         </div>
                     </div>
 
-                    <a href="Dashboard.php?tab=bought" class="btn btn-primary btn-full">
-                        View in Dashboard Things Bought
-                    </a>
+                    <div style="display: flex; gap: 10px;">
+                        <button onclick="closeModal('payment-gateway-modal'); showToast('Order saved in your Dashboard!');" class="btn btn-secondary btn-full">
+                            Close
+                        </button>
+                        <a href="Dashboard.php?tab=bought" class="btn btn-primary btn-full">
+                            View in Dashboard Things Bought →
+                        </a>
+                    </div>
                 </div>
+
+                <!-- STEP 4: Payment Error / Failure Simulation -->
+                <div id="pay-error-view" style="display: none; text-align: center; padding: 20px 10px;">
+                    <div style="font-size: 3.2rem; margin-bottom: 8px;">❌</div>
+                    <h2 style="color: var(--danger); font-size: 1.4rem; margin-bottom: 6px;">Payment Failed</h2>
+                    <p id="pay-error-msg" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">
+                        Insufficient balance in your Mobile Money account (Error 402: Insufficient Funds).
+                    </p>
+                    <button onclick="openPaymentModal(currentPaymentProduct.id)" class="btn btn-primary btn-full">
+                        Try Again with Another Number
+                    </button>
+                </div>
+
             </div>
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
-function selectPayMethod(method, cardEl) {
-    document.querySelectorAll('.payment-method-card').forEach(c => c.classList.remove('active'));
-    cardEl.classList.add('active');
-    cardEl.querySelector('input').checked = true;
+function selectPayMethod(method) {
+    currentSelectedProvider = method;
+    const momoCard = document.getElementById('momo-card-btn');
+    const omCard = document.getElementById('om-card-btn');
+    
+    if (momoCard) momoCard.className = 'payment-method-card' + (method === 'momo' ? ' active momo' : '');
+    if (omCard) omCard.className = 'payment-method-card' + (method === 'om' ? ' active om' : '');
 }
 
-function processPayment() {
-    const phone = document.getElementById('pay-phone-num').value.trim();
-    if (!phone) {
-        alert('Please provide your mobile money phone number.');
+function setSandboxNum(num, provider) {
+    const input = document.getElementById('pay-phone-num');
+    if (input) input.value = num;
+    selectPayMethod(provider);
+}
+
+function autoDetectProvider(val) {
+    const clean = val.replace(/[^0-9]/g, '');
+    if (clean.startsWith('67') || clean.startsWith('68') || clean.startsWith('650') || clean.startsWith('651') || clean.startsWith('652') || clean.startsWith('653') || clean.startsWith('654')) {
+        selectPayMethod('momo');
+    } else if (clean.startsWith('69') || clean.startsWith('655') || clean.startsWith('656') || clean.startsWith('657') || clean.startsWith('658') || clean.startsWith('659')) {
+        selectPayMethod('om');
+    }
+}
+
+function initiateSandboxPayment() {
+    const phone = (document.getElementById('pay-phone-num').value || '').trim();
+    if (!phone || phone.length < 9) {
+        alert('Please enter a valid 9-digit Cameroon mobile money number (e.g. 677 12 34 56).');
         return;
     }
 
+    // Switch to USSD Prompt Simulation
     document.getElementById('pay-form-view').style.display = 'none';
-    document.getElementById('pay-processing-view').style.display = 'block';
+    document.getElementById('pay-ussd-view').style.display = 'block';
 
-    setTimeout(() => {
-        const orderCode = 'EDUM-' + Math.floor(1000 + Math.random() * 9000);
-        document.getElementById('receipt-passcode').textContent = orderCode;
-        document.getElementById('receipt-item-name').textContent = currentPaymentProduct.title;
-        document.getElementById('receipt-campus-location').textContent = currentPaymentProduct.campus.split('(')[0];
+    const providerName = currentSelectedProvider === 'momo' ? 'MTN MoMo (*126#)' : 'Orange Money (#150*50#)';
+    document.getElementById('ussd-sim-name').textContent = currentSelectedProvider === 'momo' ? 'SIM 1: MTN CAMEROON' : 'SIM 2: ORANGE CAMEROON';
+    document.getElementById('ussd-header-text').textContent = providerName;
+    document.getElementById('ussd-price-val').textContent = currentPaymentProduct.price.toLocaleString() + ' FCFA';
+    
+    document.getElementById('sandbox-pin-input').value = '1234';
+    document.getElementById('sandbox-pin-input').focus();
+}
 
-        // Save order in store
-        Store.addOrder({
-            id: Date.now(),
-            productId: currentPaymentProduct.id,
-            title: currentPaymentProduct.title,
-            price: currentPaymentProduct.price,
-            image: currentPaymentProduct.image,
-            code: orderCode,
-            seller: currentPaymentProduct.seller,
-            campus: currentPaymentProduct.campus.split('(')[0],
-            status: "Ready for Campus Pickup",
-            date: "Today, " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-        });
+function submitSandboxPIN() {
+    const pin = document.getElementById('sandbox-pin-input').value.trim();
+    const phone = document.getElementById('pay-phone-num').value.trim();
 
-        document.getElementById('pay-processing-view').style.display = 'none';
-        document.getElementById('pay-success-view').style.display = 'block';
+    if (!pin || pin.length < 4) {
+        alert('Please enter your 4-digit PIN.');
+        return;
+    }
 
-        if (typeof renderDashboardBoughtItems === 'function') renderDashboardBoughtItems();
-    }, 2000);
+    // Check if simulate failure number
+    if (phone === '670000000') {
+        document.getElementById('pay-ussd-view').style.display = 'none';
+        document.getElementById('pay-error-view').style.display = 'block';
+        document.getElementById('pay-error-msg').textContent = 'Simulation: Insufficient balance on account ' + phone + '.';
+        return;
+    }
+
+    // Process Success
+    const orderCode = 'EDUM-' + Math.floor(1000 + Math.random() * 9000);
+    const providerLabel = currentSelectedProvider === 'momo' ? 'MTN Mobile Money' : 'Orange Money';
+
+    document.getElementById('receipt-passcode').textContent = orderCode;
+    document.getElementById('receipt-item-name').textContent = currentPaymentProduct.title;
+    document.getElementById('receipt-provider-name').textContent = providerLabel + ` (+237 ${phone})`;
+    document.getElementById('receipt-campus-location').textContent = currentPaymentProduct.campus.split('(')[0];
+
+    // Save to Store
+    Store.addOrder({
+        id: Date.now(),
+        productId: currentPaymentProduct.id,
+        title: currentPaymentProduct.title,
+        price: currentPaymentProduct.price,
+        provider: providerLabel,
+        phone: phone,
+        image: currentPaymentProduct.image,
+        code: orderCode,
+        seller: currentPaymentProduct.seller,
+        campus: currentPaymentProduct.campus.split('(')[0],
+        status: "Ready for Campus Pickup",
+        date: "Today, " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    });
+
+    document.getElementById('pay-ussd-view').style.display = 'none';
+    document.getElementById('pay-success-view').style.display = 'block';
+
+    if (typeof renderDashboardBoughtItems === 'function') renderDashboardBoughtItems();
+}
+
+function cancelPayment() {
+    document.getElementById('pay-ussd-view').style.display = 'none';
+    document.getElementById('pay-form-view').style.display = 'block';
 }
 
 // Drawer Controls
@@ -618,7 +685,7 @@ function renderCartDrawer() {
                     <h5 style="font-size: 0.9rem; margin-bottom: 4px; line-height: 1.3;">${item.title}</h5>
                     <div style="font-size: 0.85rem; font-weight: 700; color: var(--primary);">${item.price.toLocaleString()} FCFA × ${item.quantity || 1}</div>
                 </div>
-                <button onclick="openPaymentModal(${item.id})" class="btn btn-primary btn-sm" style="padding: 4px 8px; font-size: 0.75rem;" title="Pay Now">💳 Pay</button>
+                <button onclick="openPaymentModal(${item.id})" class="btn btn-primary btn-sm" style="padding: 4px 8px; font-size: 0.75rem;" title="MoMo Pay">💳 Pay</button>
                 <button onclick="removeFromCart(${item.id})" style="background: transparent; color: var(--danger); cursor: pointer; font-size: 1.1rem; padding: 4px;">✕</button>
             </div>
         `;
@@ -701,7 +768,7 @@ function openQuickView(productId) {
                 
                 <div style="display: flex; flex-direction: column; gap: 10px;">
                     <button onclick="closeModal('quickview-modal'); openPaymentModal(${product.id});" class="btn btn-primary btn-full">
-                        💳 Direct In-App Pay (${product.price.toLocaleString()} FCFA)
+                        💳 MoMo / OM Direct Checkout (${product.price.toLocaleString()} FCFA)
                     </button>
                     <a href="https://wa.me/${product.sellerPhone.replace(/[^0-9]/g, '')}?text=Hello%2C%20I%20am%20interested%20in%20your%20listing%20on%20EduMarket%3A%20${encodeURIComponent(product.title)}" target="_blank" class="btn btn-secondary btn-full">
                         💬 Or Chat with Seller on WhatsApp

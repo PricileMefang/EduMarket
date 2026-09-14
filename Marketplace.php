@@ -345,7 +345,11 @@
                     <div class="product-content">
                         <span class="product-category-tag">${product.category}</span>
                         <h3 class="product-title"><a href="ProductDetails.php?id=${product.id}">${product.title}</a></h3>
-                        <p class="product-meta-desc">${product.description}</p>
+                        
+                        <div class="buyer-count-badge">
+                            🔥 ${product.boughtCount || 20} students bought this
+                        </div>
+
                         <div class="product-seller-info">
                             <span class="seller-avatar">${product.seller[0]}</span>
                             <span>${product.seller}</span>
@@ -355,8 +359,8 @@
                         <div class="product-footer-row">
                             <span class="product-price">${product.price.toLocaleString()} FCFA</span>
                             <div class="product-card-actions">
-                                <button onclick="openQuickView(${product.id})" class="btn btn-secondary btn-card-action">Quick View</button>
-                                <button onclick="addToCart(${product.id})" class="btn btn-primary btn-card-action">Add</button>
+                                <button onclick="openPaymentModal(${product.id})" class="btn btn-primary btn-card-action" title="Direct In-App MoMo/OM Pay">💳 Buy</button>
+                                <button onclick="openQuickView(${product.id})" class="btn btn-secondary btn-card-action">Details</button>
                             </div>
                         </div>
                     </div>
