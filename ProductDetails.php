@@ -50,16 +50,13 @@ $productId = isset($_GET['id']) ? intval($_GET['id']) : 1;
         <div class="container header-container">
             <a href="index.html" class="logo-wrapper">
                 <img src="logos/edumarket logo 1.png" alt="EduMarket Logo" class="logo-img">
-                <div class="logo-text">
-                    <span class="logo-title">EduMarket</span>
-                    <span class="logo-subtitle">Student Trading Hub</span>
-                </div>
             </a>
 
             <nav>
                 <ul class="nav-menu">
                     <li><a href="index.html" class="nav-link">Home</a></li>
                     <li><a href="Marketplace.php" class="nav-link">Marketplace</a></li>
+                    <li><a href="Dashboard.php" class="nav-link">Dashboard</a></li>
                     <li><a href="SellItem.php" class="nav-link">Sell Item</a></li>
                 </ul>
             </nav>

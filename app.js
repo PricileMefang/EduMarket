@@ -1,5 +1,5 @@
 /**
- * EduMarket - Core Frontend Interactive Application & Store
+ * EduMarket - Core Frontend Interactive Application & Personal Student Store
  */
 
 const EduMarketData = {
@@ -144,17 +144,81 @@ const EduMarketData = {
     ]
 };
 
-// Global LocalStorage Store
+// Global User Session & Store
 const Store = {
-    getCart: () => JSON.parse(localStorage.getItem('edumarket_cart') || '[]'),
-    setCart: (items) => {
-        localStorage.setItem('edumarket_cart', JSON.stringify(items));
+    getUser: () => {
+        let user = JSON.parse(localStorage.getItem('edumarket_user') || 'null');
+        if (!user) {
+            // Default active demo user session
+            user = {
+                name: "Pricile Mefang",
+                email: "pricile.mefang@univ-douala.cm",
+                campus: "University of Douala",
+                matricule: "21S45899",
+                phone: "+237 6 90 12 34 56",
+                walletBalance: 45000,
+                isLoggedIn: true
+            };
+            localStorage.setItem('edumarket_user', JSON.stringify(user));
+        }
+        return user;
+    },
+    setUser: (userData) => {
+        localStorage.setItem('edumarket_user', JSON.stringify(userData));
+    },
+    logout: () => {
+        localStorage.removeItem('edumarket_user');
+        window.location.href = 'Login.php';
+    },
+
+    // User-specific Notifications
+    getNotifications: () => {
+        let notifs = JSON.parse(localStorage.getItem('edumarket_notifs') || 'null');
+        if (!notifs) {
+            notifs = [
+                {
+                    id: 1,
+                    title: "🎉 Listing Sold!",
+                    message: "A student from Polytech purchased your 'Calculus Notes'. Pickup passcode: EDUM-4821.",
+                    time: "10 mins ago",
+                    read: false
+                },
+                {
+                    id: 2,
+                    title: "💳 Payment Received in Escrow",
+                    message: "+8,000 FCFA has been credited to your campus escrow wallet.",
+                    time: "2 hours ago",
+                    read: false
+                },
+                {
+                    id: 3,
+                    title: "💬 New Student Inquiry",
+                    message: "Emmanuel K. inquired about your HP Pavilion listing via WhatsApp.",
+                    time: "1 day ago",
+                    read: true
+                },
+                {
+                    id: 4,
+                    title: "❤️ Price Drop Alert",
+                    message: "An item on your liked list 'Casio Scientific Calculator' dropped to 8,000 FCFA.",
+                    time: "2 days ago",
+                    read: true
+                }
+            ];
+            localStorage.setItem('edumarket_notifs', JSON.stringify(notifs));
+        }
+        return notifs;
+    },
+    markAllNotifsRead: () => {
+        const notifs = Store.getNotifications().map(n => ({ ...n, read: true }));
+        localStorage.setItem('edumarket_notifs', JSON.stringify(notifs));
         Store.updateBadges();
     },
+
+    // User-specific Liked Items
     getWishlist: () => {
         let list = JSON.parse(localStorage.getItem('edumarket_wishlist') || 'null');
         if (!list) {
-            // Seed default liked items on first launch so user sees them on dashboard immediately
             list = [EduMarketData.products[0], EduMarketData.products[2]];
             localStorage.setItem('edumarket_wishlist', JSON.stringify(list));
         }
@@ -164,18 +228,99 @@ const Store = {
         localStorage.setItem('edumarket_wishlist', JSON.stringify(items));
         Store.updateBadges();
     },
-    getOrders: () => JSON.parse(localStorage.getItem('edumarket_orders') || '[]'),
+
+    // User-specific Things Bought (Purchases & Escrow Codes)
+    getOrders: () => {
+        let orders = JSON.parse(localStorage.getItem('edumarket_orders') || 'null');
+        if (!orders) {
+            orders = [
+                {
+                    id: 101,
+                    productId: 3,
+                    title: "Casio FX-991EX ClassWiz Scientific Calculator",
+                    price: 8000,
+                    image: "images/casio.webp",
+                    code: "EDUM-8391",
+                    seller: "Diane N.",
+                    campus: "Polytech Douala",
+                    status: "Ready for Pickup",
+                    date: "Today, 14:20"
+                }
+            ];
+            localStorage.setItem('edumarket_orders', JSON.stringify(orders));
+        }
+        return orders;
+    },
     addOrder: (order) => {
         const orders = Store.getOrders();
         orders.unshift(order);
         localStorage.setItem('edumarket_orders', JSON.stringify(orders));
+        // Add notification for purchase
+        const notifs = Store.getNotifications();
+        notifs.unshift({
+            id: Date.now(),
+            title: "🛍️ Item Purchased Successfully",
+            message: `You purchased '${order.title}'. Present pickup code ${order.code} on campus.`,
+            time: "Just now",
+            read: false
+        });
+        localStorage.setItem('edumarket_notifs', JSON.stringify(notifs));
+        Store.updateBadges();
     },
+
+    // User-specific Things Sold (Items Listed & Sold by this Student)
+    getSoldItems: () => {
+        let sold = JSON.parse(localStorage.getItem('edumarket_sold_items') || 'null');
+        if (!sold) {
+            sold = [
+                {
+                    id: 1,
+                    title: "Calculus: Early Transcendentals (James Stewart)",
+                    price: 5000,
+                    category: "Textbooks",
+                    image: "images/calculus.jfif",
+                    status: "Active Listing",
+                    buyersCount: 48,
+                    totalEarned: 240000,
+                    lastBuyer: "Kevin T. (ENSTP)"
+                },
+                {
+                    id: 4,
+                    title: "Civil Engineering Complete Lecture Notes Pack",
+                    price: 3000,
+                    category: "Study Notes",
+                    image: "images/notes.jfif",
+                    status: "Sold Out",
+                    buyersCount: 37,
+                    totalEarned: 111000,
+                    lastBuyer: "Sarah B. (UCAC)"
+                }
+            ];
+            localStorage.setItem('edumarket_sold_items', JSON.stringify(sold));
+        }
+        return sold;
+    },
+    addListing: (listing) => {
+        const sold = Store.getSoldItems();
+        sold.unshift(listing);
+        localStorage.setItem('edumarket_sold_items', JSON.stringify(sold));
+    },
+
+    getCart: () => JSON.parse(localStorage.getItem('edumarket_cart') || '[]'),
+    setCart: (items) => {
+        localStorage.setItem('edumarket_cart', JSON.stringify(items));
+        Store.updateBadges();
+    },
+
     updateBadges: () => {
         const cart = Store.getCart();
         const wishlist = Store.getWishlist();
+        const notifs = Store.getNotifications();
+        const unreadNotifs = notifs.filter(n => !n.read).length;
         
         document.querySelectorAll('.cart-count').forEach(el => el.textContent = cart.length);
         document.querySelectorAll('.wishlist-count').forEach(el => el.textContent = wishlist.length);
+        document.querySelectorAll('.notif-count').forEach(el => el.textContent = unreadNotifs);
     }
 };
 
@@ -246,7 +391,7 @@ function toggleWishlist(productId, btnElement) {
     } else {
         wishlist.push(product);
         if (btnElement) btnElement.classList.add('active');
-        showToast(`"${product.title}" added to your Liked Items!`);
+        showToast(`"${product.title}" added to your Dashboard Liked Items!`);
     }
     Store.setWishlist(wishlist);
     renderWishlistDrawer();
@@ -355,7 +500,7 @@ function createPaymentModalDOM() {
                 <div id="pay-success-view" style="display: none; text-align: center; padding: 20px 10px;">
                     <div style="font-size: 3.5rem; margin-bottom: 10px;">🎉</div>
                     <h2 style="color: var(--success); font-size: 1.5rem; margin-bottom: 6px;">Payment Successful!</h2>
-                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Your purchase is confirmed. Show your pickup code to the student seller.</p>
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;">Your purchase is saved in your Dashboard. Show your pickup code to the student seller.</p>
                     
                     <div style="background: var(--bg-alt); border: 2px dashed var(--primary); padding: 16px; border-radius: var(--radius-lg); margin-bottom: 20px; text-align: left;">
                         <div style="display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.88rem;">
@@ -372,9 +517,9 @@ function createPaymentModalDOM() {
                         </div>
                     </div>
 
-                    <button onclick="closeModal('payment-gateway-modal'); showToast('Order saved in your Dashboard!');" class="btn btn-primary btn-full">
-                        Done & View Order
-                    </button>
+                    <a href="Dashboard.php?tab=bought" class="btn btn-primary btn-full">
+                        View in Dashboard Things Bought
+                    </a>
                 </div>
             </div>
         </div>
@@ -413,14 +558,16 @@ function processPayment() {
             image: currentPaymentProduct.image,
             code: orderCode,
             seller: currentPaymentProduct.seller,
-            date: new Date().toLocaleDateString()
+            campus: currentPaymentProduct.campus.split('(')[0],
+            status: "Ready for Campus Pickup",
+            date: "Today, " + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
         });
 
         document.getElementById('pay-processing-view').style.display = 'none';
         document.getElementById('pay-success-view').style.display = 'block';
 
-        if (typeof renderDashboardOrders === 'function') renderDashboardOrders();
-    }, 2200);
+        if (typeof renderDashboardBoughtItems === 'function') renderDashboardBoughtItems();
+    }, 2000);
 }
 
 // Drawer Controls
@@ -491,13 +638,17 @@ function renderWishlistDrawer() {
                 <div style="font-size: 3rem; margin-bottom: 10px;">❤️</div>
                 <h4 style="color: var(--text-main); margin-bottom: 6px;">No saved items</h4>
                 <p style="font-size: 0.9rem;">View and manage liked items with purchase counts on your Student Dashboard.</p>
-                <a href="Dashboard.php?tab=liked" class="btn btn-primary btn-sm" style="margin-top: 14px;">Open Dashboard</a>
+                <a href="Dashboard.php?tab=liked" class="btn btn-primary btn-sm" style="margin-top: 14px;">Open Student Dashboard</a>
             </div>
         `;
         return;
     }
     
-    wishlistBody.innerHTML = wishlist.map(item => `
+    wishlistBody.innerHTML = `
+        <div style="padding: 10px; background: var(--primary-light); border-radius: var(--radius-md); font-size: 0.82rem; margin-bottom: 10px;">
+            🔒 Liked items & buyer metrics are privately managed in your <a href="Dashboard.php?tab=liked" style="color: var(--primary); font-weight: 700;">Student Dashboard</a>.
+        </div>
+    ` + wishlist.map(item => `
         <div style="display: flex; gap: 12px; padding: 12px; background: var(--bg-alt); border-radius: var(--radius-md); align-items: center;">
             <img src="${item.image}" alt="${item.title}" style="width: 54px; height: 54px; object-fit: cover; border-radius: 8px;">
             <div style="flex: 1;">

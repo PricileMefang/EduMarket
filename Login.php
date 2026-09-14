@@ -6,11 +6,12 @@ $success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = trim($_POST['password'] ?? '');
+    $campus = trim($_POST['campus'] ?? 'University of Douala');
 
     if (empty($email) || empty($password)) {
         $error = 'Please fill in both your student email/ID and password.';
     } else {
-        $success = 'Login successful! Redirecting to Marketplace...';
+        $success = 'Login successful! Opening your Student Dashboard...';
     }
 }
 ?>
@@ -46,21 +47,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-    <!-- Top Sticky Header -->
+    <!-- Top Sticky Header with Clean Standalone Logo -->
     <header class="site-header">
         <div class="container header-container">
             <a href="index.html" class="logo-wrapper">
                 <img src="logos/edumarket logo 1.png" alt="EduMarket Logo" class="logo-img">
-                <div class="logo-text">
-                    <span class="logo-title">EduMarket</span>
-                    <span class="logo-subtitle">Student Trading Hub</span>
-                </div>
             </a>
 
             <nav>
                 <ul class="nav-menu">
                     <li><a href="index.html" class="nav-link">Home</a></li>
                     <li><a href="Marketplace.php" class="nav-link">Marketplace</a></li>
+                    <li><a href="Dashboard.php" class="nav-link">Dashboard</a></li>
                 </ul>
             </nav>
 
@@ -75,13 +73,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="auth-card">
                 <div class="auth-header">
                     <img src="logos/edumarket logo 1.png" alt="EduMarket" class="auth-logo">
-                    <h1 class="auth-title">Welcome Back</h1>
-                    <p class="auth-subtitle">Login to access your campus listings and saved items.</p>
+                    <h1 class="auth-title">Student Portal Login</h1>
+                    <p class="auth-subtitle">Login to view your notifications, liked items, bought orders and sales.</p>
                 </div>
 
                 <!-- Demo Auto-Fill Box -->
                 <div class="demo-pill" onclick="fillDemoLogin()" title="Click to auto-fill demo credentials">
-                    <span>⚡ <strong>Demo Account:</strong> student@univ-douala.cm</span>
+                    <span>⚡ <strong>Demo Student:</strong> Pricile Mefang</span>
                     <span style="font-weight: 700;">Fill Form →</span>
                 </div>
 
@@ -95,7 +93,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #059669; padding: 12px 16px; border-radius: var(--radius-md); margin-bottom: 20px; font-size: 0.9rem;">
                         ✓ <?php echo htmlspecialchars($success); ?>
                         <script>
-                            setTimeout(() => { window.location.href = 'Marketplace.php'; }, 1200);
+                            setTimeout(() => { 
+                                Store.setUser({
+                                    name: "Pricile Mefang",
+                                    email: "<?php echo addslashes($email); ?>",
+                                    campus: "<?php echo addslashes($campus); ?>",
+                                    matricule: "21S45899",
+                                    walletBalance: 45000,
+                                    isLoggedIn: true
+                                });
+                                window.location.href = 'Dashboard.php'; 
+                            }, 1000);
                         </script>
                     </div>
                 <?php endif; ?>
@@ -113,7 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <option value="University of Buea">University of Buea (UB)</option>
                             <option value="University of Yaounde I">University of Yaounde I</option>
                             <option value="University of Yaounde II">University of Yaounde II (Soa)</option>
-                            <option value="Polytech Douala / Yaounde">National Higher Polytechnic</option>
+                            <option value="Polytech Douala">National Higher Polytechnic</option>
                             <option value="Catholic University (UCAC)">Catholic University (UCAC)</option>
                             <option value="Other">Other Campus</option>
                         </select>
@@ -131,16 +139,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <div class="form-group" style="display: flex; align-items: center; gap: 8px;">
-                        <input type="checkbox" id="remember" name="remember" style="accent-color: var(--primary); width: 16px; height: 16px; cursor: pointer;">
+                        <input type="checkbox" id="remember" name="remember" checked style="accent-color: var(--primary); width: 16px; height: 16px; cursor: pointer;">
                         <label for="remember" style="font-size: 0.88rem; color: var(--text-muted); cursor: pointer;">Remember me on this browser</label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top: 10px;">Sign In to EduMarket</button>
+                    <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top: 10px;">Sign In to My Dashboard</button>
                 </form>
 
                 <div style="text-align: center; margin-top: 24px; font-size: 0.92rem; color: var(--text-muted);">
                     Don't have a student account yet? <br>
-                    <a href="register.php" style="color: var(--primary); font-weight: 700; display: inline-block; margin-top: 4px;">Register Free Now →</a>
+                    <a href="register.php" style="color: var(--primary); font-weight: 700; display: inline-block; margin-top: 4px;">Register Free Student Account →</a>
                 </div>
             </div>
         </div>

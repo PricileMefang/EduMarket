@@ -56,10 +56,6 @@
         <div class="container header-container">
             <a href="index.html" class="logo-wrapper">
                 <img src="logos/edumarket logo 1.png" alt="EduMarket Logo" class="logo-img">
-                <div class="logo-text">
-                    <span class="logo-title">EduMarket</span>
-                    <span class="logo-subtitle">Student Trading Hub</span>
-                </div>
             </a>
 
             <!-- Header Search Bar -->

@@ -8,6 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
     $campus = trim($_POST['campus'] ?? '');
+    $matricule = trim($_POST['matricule'] ?? '');
     $password = trim($_POST['password'] ?? '');
 
     if (empty($fullname) || empty($email) || empty($phone) || empty($password)) {
@@ -15,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Please provide a valid email address.';
     } else {
-        $success = "Account created successfully for $fullname! You can now log in.";
+        $success = "Account created successfully for $fullname! Logging you into your Dashboard...";
     }
 }
 ?>
@@ -33,21 +34,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 
-    <!-- Top Sticky Header -->
+    <!-- Top Sticky Header with Clean Standalone Logo -->
     <header class="site-header">
         <div class="container header-container">
             <a href="index.html" class="logo-wrapper">
                 <img src="logos/edumarket logo 1.png" alt="EduMarket Logo" class="logo-img">
-                <div class="logo-text">
-                    <span class="logo-title">EduMarket</span>
-                    <span class="logo-subtitle">Student Trading Hub</span>
-                </div>
             </a>
 
             <nav>
                 <ul class="nav-menu">
                     <li><a href="index.html" class="nav-link">Home</a></li>
                     <li><a href="Marketplace.php" class="nav-link">Marketplace</a></li>
+                    <li><a href="Dashboard.php" class="nav-link">Dashboard</a></li>
                 </ul>
             </nav>
 
@@ -63,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="auth-header">
                     <img src="logos/edumarket logo 1.png" alt="EduMarket" class="auth-logo">
                     <h1 class="auth-title">Join EduMarket</h1>
-                    <p class="auth-subtitle">Create your verified student account to buy and sell on campus.</p>
+                    <p class="auth-subtitle">Create your verified student account to manage your listings, likes, and purchases.</p>
                 </div>
 
                 <?php if (!empty($error)): ?>
@@ -75,9 +73,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php if (!empty($success)): ?>
                     <div style="background: #ecfdf5; border: 1px solid #a7f3d0; color: #059669; padding: 12px 16px; border-radius: var(--radius-md); margin-bottom: 20px; font-size: 0.9rem;">
                         ✓ <?php echo htmlspecialchars($success); ?>
-                        <div style="margin-top: 10px;">
-                            <a href="Login.php" class="btn btn-primary btn-sm">Proceed to Login →</a>
-                        </div>
+                        <script>
+                            setTimeout(() => {
+                                Store.setUser({
+                                    name: "<?php echo addslashes($fullname); ?>",
+                                    email: "<?php echo addslashes($email); ?>",
+                                    campus: "<?php echo addslashes($campus); ?>",
+                                    matricule: "<?php echo addslashes($matricule); ?>",
+                                    phone: "<?php echo addslashes($phone); ?>",
+                                    walletBalance: 20000,
+                                    isLoggedIn: true
+                                });
+                                window.location.href = 'Dashboard.php';
+                            }, 1200);
+                        </script>
                     </div>
                 <?php endif; ?>
 
@@ -131,13 +140,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
 
                     <div class="form-group" style="display: flex; align-items: flex-start; gap: 10px;">
-                        <input type="checkbox" id="terms" name="terms" required style="accent-color: var(--primary); width: 16px; height: 16px; margin-top: 4px; cursor: pointer;">
+                        <input type="checkbox" id="terms" name="terms" required checked style="accent-color: var(--primary); width: 16px; height: 16px; margin-top: 4px; cursor: pointer;">
                         <label for="terms" style="font-size: 0.85rem; color: var(--text-muted); cursor: pointer;">
                             I agree to the <a href="#" onclick="alert('EduMarket terms: All trade must occur in public campus safety zones.'); return false;" style="color: var(--primary); font-weight: 600;">Terms & Campus Safety Guidelines</a>.
                         </label>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-full btn-lg">Create Student Account</button>
+                    <button type="submit" class="btn btn-primary btn-full btn-lg">Create Account & Open Dashboard</button>
                 </form>
 
                 <div style="text-align: center; margin-top: 24px; font-size: 0.92rem; color: var(--text-muted);">

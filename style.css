@@ -114,7 +114,7 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   Header & Navigation
+   Header & Navigation (Clean Logo Image Only)
    ========================================================================== */
 .site-header {
     position: sticky;
@@ -140,35 +140,18 @@ button, input, select, textarea {
 .logo-wrapper {
     display: flex;
     align-items: center;
-    gap: 12px;
     flex-shrink: 0;
 }
 
 .logo-img {
-    height: 48px;
+    height: 54px;
     width: auto;
     object-fit: contain;
+    transition: transform 0.2s ease;
 }
 
-.logo-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-title {
-    font-family: var(--font-heading);
-    font-size: 1.35rem;
-    font-weight: 800;
-    color: var(--primary);
-    letter-spacing: -0.02em;
-}
-
-.logo-subtitle {
-    font-size: 0.72rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+.logo-wrapper:hover .logo-img {
+    transform: scale(1.03);
 }
 
 /* Search bar in header */
@@ -881,7 +864,7 @@ button, input, select, textarea {
    ========================================================================== */
 .dashboard-container {
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 270px 1fr;
     gap: 32px;
     padding: 36px 0 60px;
 }
@@ -916,7 +899,7 @@ button, input, select, textarea {
 .dash-nav-btn {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: space-between;
     padding: 12px 16px;
     border-radius: var(--radius-md);
     font-weight: 600;
@@ -940,6 +923,36 @@ button, input, select, textarea {
 
 .dash-tab-content.active {
     display: block;
+}
+
+/* Notification Item */
+.notif-card {
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    padding: 18px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
+}
+
+.notif-card.unread {
+    border-left: 4px solid var(--primary);
+    background: #f0fdfa;
+}
+
+/* Sold Item Row Card */
+.sold-item-card {
+    background: #ffffff;
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--shadow-sm);
 }
 
 /* Payment Method Selection Card */
