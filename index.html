@@ -38,9 +38,9 @@
                 <ul class="nav-menu">
                     <li><a href="index.html" class="nav-link active">Home</a></li>
                     <li><a href="Marketplace.php" class="nav-link">Marketplace</a></li>
-                    <li><a href="#categories" class="nav-link">Categories</a></li>
+                    <li><a href="Dashboard.php" class="nav-link">Dashboard</a></li>
+                    <li><a href="#peer-chat-hub" class="nav-link">WhatsApp Chat</a></li>
                     <li><a href="#about" class="nav-link">Why Us</a></li>
-                    <li><a href="#faq" class="nav-link">FAQ</a></li>
                 </ul>
             </nav>
 
@@ -58,9 +58,8 @@
                     <span class="badge-count cart-count">0</span>
                 </button>
 
-                <a href="Login.php" class="btn btn-secondary btn-sm">Login</a>
-                <a href="register.php" class="btn btn-primary btn-sm">Register</a>
-                <a href="SellItem.php" class="btn btn-accent btn-sm" style="display: none; @media(min-width: 1024px){display: inline-flex;}">+ Sell Item</a>
+                <a href="Dashboard.php" class="btn btn-secondary btn-sm">Student Portal</a>
+                <a href="SellItem.php" class="btn btn-primary btn-sm">+ Post Listing</a>
                 
                 <button class="btn-mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
             </div>
@@ -72,6 +71,8 @@
         <ul style="list-style: none; display: flex; flex-direction: column; gap: 14px;">
             <li><a href="index.html" style="font-weight: 700; color: var(--primary);">Home</a></li>
             <li><a href="Marketplace.php">Marketplace</a></li>
+            <li><a href="Dashboard.php">Student Dashboard</a></li>
+            <li><a href="#peer-chat-hub">Campus WhatsApp Chat</a></li>
             <li><a href="SellItem.php">Sell an Item</a></li>
             <li><a href="Login.php">Student Login</a></li>
             <li><a href="register.php">Create Account</a></li>
@@ -92,11 +93,11 @@
                         <span class="highlight">Student Resources</span> with Ease.
                     </h1>
                     <p class="hero-subtitle">
-                        Get discounted textbooks, laptops, scientific calculators, dorm essentials and class notes directly from verified students on your campus.
+                        Get discounted textbooks, laptops, scientific calculators, dorm essentials and notes directly from verified peers. Pay in-app via MoMo/OM or chat directly on WhatsApp.
                     </p>
                     
                     <div class="hero-cta">
-                        <a href="SellItem.php" class="btn btn-primary btn-lg">🚀 Start Selling Free</a>
+                        <a href="Dashboard.php" class="btn btn-primary btn-lg">📊 Open Student Dashboard</a>
                         <a href="Marketplace.php" class="btn btn-secondary btn-lg">Browse Marketplace</a>
                     </div>
 
@@ -119,10 +120,10 @@
                 <div class="hero-image-wrap">
                     <img src="images/image.webp" alt="Students buying and selling on campus" class="hero-img-main">
                     <div class="hero-floating-badge">
-                        <div class="floating-icon">🛡️</div>
+                        <div class="floating-icon">💬</div>
                         <div>
-                            <strong style="display:block; font-size: 0.95rem;">Verified Campus Trade</strong>
-                            <span style="font-size: 0.8rem; color: var(--text-muted);">Safe public meetups & instant deals</span>
+                            <strong style="display:block; font-size: 0.95rem;">Direct WhatsApp & MoMo Pay</strong>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Chat with peers or buy instantly</span>
                         </div>
                     </div>
                 </div>
@@ -206,7 +207,7 @@
                 <div class="section-head">
                     <div>
                         <h2 class="section-title">Featured Campus Deals</h2>
-                        <p class="section-desc">Handpicked verified items from fellow students right now.</p>
+                        <p class="section-desc">Handpicked verified items with instant In-App Pay & WhatsApp Connect.</p>
                     </div>
                     <a href="Marketplace.php" class="section-link">Explore Marketplace →</a>
                 </div>
@@ -217,12 +218,12 @@
                         <div class="product-media">
                             <img src="images/calculus.jfif" alt="Calculus Textbook">
                             <span class="product-badge-condition">Like New</span>
-                            <button class="product-wishlist-btn" onclick="toggleWishlist(1, this)" title="Save to wishlist">❤️</button>
+                            <button class="product-wishlist-btn" onclick="toggleWishlist(1, this)" title="Save to Liked Items">❤️</button>
                         </div>
                         <div class="product-content">
                             <span class="product-category-tag">Textbooks</span>
                             <h3 class="product-title"><a href="ProductDetails.php?id=1">Calculus: Early Transcendentals (8th Ed)</a></h3>
-                            <p class="product-meta-desc">James Stewart — Pristine condition with step-by-step guides.</p>
+                            <div class="buyer-count-badge">🔥 48 students bought this</div>
                             <div class="product-seller-info">
                                 <span class="seller-avatar">M</span>
                                 <span>Mefang P.</span>
@@ -232,8 +233,8 @@
                             <div class="product-footer-row">
                                 <span class="product-price">5,000 FCFA</span>
                                 <div class="product-card-actions">
-                                    <button onclick="openQuickView(1)" class="btn btn-secondary btn-card-action">Quick View</button>
-                                    <button onclick="addToCart(1)" class="btn btn-primary btn-card-action">Add</button>
+                                    <button onclick="openPaymentModal(1)" class="btn btn-primary btn-card-action" title="Direct In-App Pay without Chat">💳 Buy</button>
+                                    <button onclick="openQuickView(1)" class="btn btn-secondary btn-card-action">Details</button>
                                 </div>
                             </div>
                         </div>
@@ -244,12 +245,12 @@
                         <div class="product-media">
                             <img src="images/hp pavilion.webp" alt="HP Pavilion Laptop">
                             <span class="product-badge-condition">Used - Good</span>
-                            <button class="product-wishlist-btn" onclick="toggleWishlist(2, this)" title="Save to wishlist">❤️</button>
+                            <button class="product-wishlist-btn" onclick="toggleWishlist(2, this)" title="Save to Liked Items">❤️</button>
                         </div>
                         <div class="product-content">
                             <span class="product-category-tag">Electronics</span>
                             <h3 class="product-title"><a href="ProductDetails.php?id=2">HP Pavilion 15 (Core i5, 8GB RAM, SSD)</a></h3>
-                            <p class="product-meta-desc">Fast workstation for programming and university projects.</p>
+                            <div class="buyer-count-badge">🔥 19 students bought this</div>
                             <div class="product-seller-info">
                                 <span class="seller-avatar">E</span>
                                 <span>Emmanuel K.</span>
@@ -259,8 +260,8 @@
                             <div class="product-footer-row">
                                 <span class="product-price">250,000 FCFA</span>
                                 <div class="product-card-actions">
-                                    <button onclick="openQuickView(2)" class="btn btn-secondary btn-card-action">Quick View</button>
-                                    <button onclick="addToCart(2)" class="btn btn-primary btn-card-action">Add</button>
+                                    <button onclick="openPaymentModal(2)" class="btn btn-primary btn-card-action">💳 Buy</button>
+                                    <button onclick="openQuickView(2)" class="btn btn-secondary btn-card-action">Details</button>
                                 </div>
                             </div>
                         </div>
@@ -271,12 +272,12 @@
                         <div class="product-media">
                             <img src="images/casio.webp" alt="Casio FX-991EX Calculator">
                             <span class="product-badge-condition">Like New</span>
-                            <button class="product-wishlist-btn" onclick="toggleWishlist(3, this)" title="Save to wishlist">❤️</button>
+                            <button class="product-wishlist-btn" onclick="toggleWishlist(3, this)" title="Save to Liked Items">❤️</button>
                         </div>
                         <div class="product-content">
                             <span class="product-category-tag">Calculators</span>
                             <h3 class="product-title"><a href="ProductDetails.php?id=3">Casio FX-991EX ClassWiz Calculator</a></h3>
-                            <p class="product-meta-desc">High-speed processor & 552 functions for exam use.</p>
+                            <div class="buyer-count-badge">🔥 64 students bought this</div>
                             <div class="product-seller-info">
                                 <span class="seller-avatar">D</span>
                                 <span>Diane N.</span>
@@ -286,8 +287,8 @@
                             <div class="product-footer-row">
                                 <span class="product-price">8,000 FCFA</span>
                                 <div class="product-card-actions">
-                                    <button onclick="openQuickView(3)" class="btn btn-secondary btn-card-action">Quick View</button>
-                                    <button onclick="addToCart(3)" class="btn btn-primary btn-card-action">Add</button>
+                                    <button onclick="openPaymentModal(3)" class="btn btn-primary btn-card-action">💳 Buy</button>
+                                    <button onclick="openQuickView(3)" class="btn btn-secondary btn-card-action">Details</button>
                                 </div>
                             </div>
                         </div>
@@ -298,12 +299,12 @@
                         <div class="product-media">
                             <img src="images/notes.jfif" alt="Engineering Notes">
                             <span class="product-badge-condition">New Summary</span>
-                            <button class="product-wishlist-btn" onclick="toggleWishlist(4, this)" title="Save to wishlist">❤️</button>
+                            <button class="product-wishlist-btn" onclick="toggleWishlist(4, this)" title="Save to Liked Items">❤️</button>
                         </div>
                         <div class="product-content">
                             <span class="product-category-tag">Study Notes</span>
                             <h3 class="product-title"><a href="ProductDetails.php?id=4">Civil Engineering Course Summaries & Past Qs</a></h3>
-                            <p class="product-meta-desc">Complete summary binder with verified worked solutions.</p>
+                            <div class="buyer-count-badge">🔥 37 students bought this</div>
                             <div class="product-seller-info">
                                 <span class="seller-avatar">K</span>
                                 <span>Kevin T.</span>
@@ -313,8 +314,8 @@
                             <div class="product-footer-row">
                                 <span class="product-price">3,000 FCFA</span>
                                 <div class="product-card-actions">
-                                    <button onclick="openQuickView(4)" class="btn btn-secondary btn-card-action">Quick View</button>
-                                    <button onclick="addToCart(4)" class="btn btn-primary btn-card-action">Add</button>
+                                    <button onclick="openPaymentModal(4)" class="btn btn-primary btn-card-action">💳 Buy</button>
+                                    <button onclick="openQuickView(4)" class="btn btn-secondary btn-card-action">Details</button>
                                 </div>
                             </div>
                         </div>
@@ -323,8 +324,84 @@
             </div>
         </section>
 
+        <!-- Landing Page Student WhatsApp Peer Chat Hub -->
+        <section id="peer-chat-hub" class="section section-alt">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <span class="hero-tag" style="margin-bottom: 8px;">💬 Live Campus Peer Connect</span>
+                        <h2 class="section-title">Chat with Fellow Students on WhatsApp</h2>
+                        <p class="section-desc">Connect directly with student sellers and study tutors across campuses.</p>
+                    </div>
+                    <a href="Dashboard.php?tab=peerchat" class="section-link">Open Full Chat Hub →</a>
+                </div>
+
+                <div class="peer-chat-grid">
+                    <div class="peer-chat-card">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="peer-avatar-wrap">
+                                M
+                                <span class="peer-status-dot online"></span>
+                            </div>
+                            <div>
+                                <strong style="font-size: 1.05rem;">Mefang Pricile</strong>
+                                <span style="display: block; font-size: 0.78rem; color: var(--primary); font-weight: 700;">Science & Math Tutor</span>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">
+                            <div>📍 University of Douala</div>
+                            <div style="margin-top: 4px; color: var(--text-main); font-weight: 600;">📚 Calculus & Physics Textbooks</div>
+                        </div>
+                        <a href="https://wa.me/237690123456?text=Hello%20Mefang%2C%20I%20saw%20your%20profile%20on%20EduMarket%20and%20would%20like%20to%20chat%21" target="_blank" class="btn btn-primary btn-full btn-sm">
+                            💬 Start WhatsApp Chat
+                        </a>
+                    </div>
+
+                    <div class="peer-chat-card">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="peer-avatar-wrap">
+                                E
+                                <span class="peer-status-dot online"></span>
+                            </div>
+                            <div>
+                                <strong style="font-size: 1.05rem;">Emmanuel Kouam</strong>
+                                <span style="display: block; font-size: 0.78rem; color: var(--primary); font-weight: 700;">Tech Gadgets & Laptops</span>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">
+                            <div>📍 University of Buea</div>
+                            <div style="margin-top: 4px; color: var(--text-main); font-weight: 600;">💻 Student PCs & Flash Drives</div>
+                        </div>
+                        <a href="https://wa.me/237671234567?text=Hello%20Emmanuel%2C%20I%20saw%20your%20gadget%20listings%20on%20EduMarket%21" target="_blank" class="btn btn-primary btn-full btn-sm">
+                            💬 Start WhatsApp Chat
+                        </a>
+                    </div>
+
+                    <div class="peer-chat-card">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div class="peer-avatar-wrap">
+                                D
+                                <span class="peer-status-dot away"></span>
+                            </div>
+                            <div>
+                                <strong style="font-size: 1.05rem;">Diane Ngo</strong>
+                                <span style="display: block; font-size: 0.78rem; color: var(--primary); font-weight: 700;">Engineering Representative</span>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.85rem; color: var(--text-muted);">
+                            <div>📍 Polytech Douala</div>
+                            <div style="margin-top: 4px; color: var(--text-main); font-weight: 600;">🔢 Scientific Calculators & Kits</div>
+                        </div>
+                        <a href="https://wa.me/237682345678?text=Hello%20Diane%2C%20I%20am%20interested%20in%20scientific%20calculators%20on%20EduMarket%21" target="_blank" class="btn btn-primary btn-full btn-sm">
+                            💬 Start WhatsApp Chat
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- Trust & Why Us Section -->
-        <section id="about" class="section section-alt">
+        <section id="about" class="section">
             <div class="container">
                 <div class="section-head" style="text-align: center; display: block; margin-bottom: 48px;">
                     <h2 class="section-title">Why Students Choose EduMarket</h2>
@@ -344,16 +421,16 @@
                         <div class="feature-icon-wrap">
                             <img src="icons/trust.png" alt="Verified Students">
                         </div>
-                        <h3 class="feature-title">Verified Student Profiles</h3>
-                        <p class="feature-desc">Trade with confidence knowing you are connecting with real peers from your campus.</p>
+                        <h3 class="feature-title">Direct In-App Checkout</h3>
+                        <p class="feature-desc">Pay directly with MTN MoMo or Orange Money with secure campus escrow pickup passcodes.</p>
                     </div>
 
                     <div class="feature-box">
                         <div class="feature-icon-wrap">
                             <img src="icons/convinient.png" alt="Fast Campus Meetup">
                         </div>
-                        <h3 class="feature-title">Convenient Campus Meetups</h3>
-                        <p class="feature-desc">Meet directly at campus libraries, cafeterias, or faculty lobbies without delivery fees.</p>
+                        <h3 class="feature-title">WhatsApp Direct Connect</h3>
+                        <p class="feature-desc">Chat directly with peers on WhatsApp to negotiate or arrange convenient campus handoffs.</p>
                     </div>
 
                     <div class="feature-box">
@@ -362,48 +439,6 @@
                         </div>
                         <h3 class="feature-title">Recycle & Support Peers</h3>
                         <p class="feature-desc">Pass along study materials to junior students while earning extra pocket money.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- FAQ Section -->
-        <section id="faq" class="section">
-            <div class="container">
-                <div class="section-head" style="text-align: center; display: block; margin-bottom: 40px;">
-                    <h2 class="section-title">Frequently Asked Questions</h2>
-                    <p class="section-desc">Got questions? We've got answers for you.</p>
-                </div>
-
-                <div class="faq-wrap">
-                    <div class="faq-item open">
-                        <div class="faq-question">
-                            <span>How do I list an item for sale on EduMarket?</span>
-                            <span class="faq-chevron">▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            Simply create a free account or log in, click the <strong>"Sell an Item"</strong> button, fill in your product details (photos, price, description, and your campus), and your listing is live immediately!
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <span>Is EduMarket free to use for students?</span>
-                            <span class="faq-chevron">▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            Yes! EduMarket is completely free for student buyers and sellers to list, browse, and connect directly on campus.
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">
-                            <span>How do payments and item handoffs work?</span>
-                            <span class="faq-chevron">▼</span>
-                        </div>
-                        <div class="faq-answer">
-                            Buyers and sellers chat directly on WhatsApp or phone to agree on a public meetup location on campus (e.g. university library or student lounge) to inspect the item and complete payment via Mobile Money (OM/MOMO) or cash.
-                        </div>
                     </div>
                 </div>
             </div>
@@ -418,9 +453,7 @@
             <h3 style="font-size: 1.2rem;">🛒 Shopping Cart</h3>
             <button onclick="closeDrawers()" style="background: transparent; font-size: 1.3rem; cursor: pointer;">✕</button>
         </div>
-        <div id="cart-drawer-body" class="drawer-body">
-            <!-- Dynamic Cart Items -->
-        </div>
+        <div id="cart-drawer-body" class="drawer-body"></div>
         <div class="drawer-footer">
             <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 14px; font-size: 1.1rem;">
                 <span>Total:</span>
@@ -433,21 +466,17 @@
     <!-- Slide-out Wishlist Drawer -->
     <div id="wishlist-drawer" class="drawer-panel">
         <div class="drawer-head">
-            <h3 style="font-size: 1.2rem;">❤️ Saved Items</h3>
+            <h3 style="font-size: 1.2rem;">❤️ Liked Items</h3>
             <button onclick="closeDrawers()" style="background: transparent; font-size: 1.3rem; cursor: pointer;">✕</button>
         </div>
-        <div id="wishlist-drawer-body" class="drawer-body">
-            <!-- Dynamic Wishlist Items -->
-        </div>
+        <div id="wishlist-drawer-body" class="drawer-body"></div>
     </div>
 
     <!-- Quick View Modal -->
     <div id="quickview-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="modal-close-btn" onclick="closeModal('quickview-modal')">✕</button>
-            <div id="quickview-modal-body">
-                <!-- Loaded dynamically -->
-            </div>
+            <div id="quickview-modal-body"></div>
         </div>
     </div>
 
@@ -467,9 +496,9 @@
                     <ul class="footer-nav">
                         <li><a href="index.html">Home</a></li>
                         <li><a href="Marketplace.php">Marketplace</a></li>
+                        <li><a href="Dashboard.php">Student Dashboard</a></li>
                         <li><a href="SellItem.php">Post a Listing</a></li>
                         <li><a href="Login.php">Student Login</a></li>
-                        <li><a href="register.php">Create Account</a></li>
                     </ul>
                 </div>
 
