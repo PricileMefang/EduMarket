@@ -3,206 +3,516 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduMarket | Buy, Sell & Exchange Student Resources</title>
+    <meta name="description" content="EduMarket is the #1 trusted campus marketplace for university students to buy, sell and exchange textbooks, laptops, calculators, study notes, and dorm essentials.">
     <link rel="icon" type="image/png" href="logos/edumarket logo 2.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <title>EduMarket</title>
 </head>
 <body>
-    <div class="page-shell"> 
-        <header class="site-header">
-            <div class="header-inner">
-                <a href="index.html" class="logo-link">
-                    <img src="logos/edumarket logo 1.png" alt="EduMarket Logo">
-                </a>
 
-                <nav class="main-nav">
-                    <a href="#home">Home</a>
-                    <a href="Marketplace.php">Marketplace</a>
-                    <a href="#categories">Categories</a>
-                    <a href="#about">About Us</a>
-                    <a href="#contact">Contact</a>
-                </nav>
-
-                <div class="header-actions">
-                    <a href="Login.php" class="button button-outline">Login</a>
-                    <a href="Register.php" class="button button-primary">Register</a>
+    <!-- Top Sticky Header -->
+    <header class="site-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-wrapper">
+                <img src="logos/edumarket logo 1.png" alt="EduMarket Logo" class="logo-img">
+                <div class="logo-text">
+                    <span class="logo-title">EduMarket</span>
+                    <span class="logo-subtitle">Student Trading Hub</span>
                 </div>
-            </div>
-        </header>
+            </a>
 
-        <main>
-            <section id="home" class="hero-section">
-                <div class="hero-copy">
-                    <h1>Buy, Sell and Exchange Student Resources</h1>
-                    <p>Find affordable textbooks, electronics, study materials and services from fellow students in a trusted marketplace.</p>
-                    <div class="hero-buttons">
-                        <a href="Register.php" class="button button-primary">Start Selling</a>
-                        <a href="Marketplace.php" class="button button-secondary">Browse Marketplace</a>
+            <!-- Header Search Bar -->
+            <form action="Marketplace.php" method="GET" class="header-search">
+                <div class="search-input-wrap">
+                    <span class="search-icon-btn">🔍</span>
+                    <input type="text" name="q" placeholder="Search textbooks, laptops, notes, tools..." aria-label="Search">
+                </div>
+            </form>
+
+            <!-- Navigation Links -->
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="Marketplace.php" class="nav-link">Marketplace</a></li>
+                    <li><a href="#categories" class="nav-link">Categories</a></li>
+                    <li><a href="#about" class="nav-link">Why Us</a></li>
+                    <li><a href="#faq" class="nav-link">FAQ</a></li>
+                </ul>
+            </nav>
+
+            <!-- Action Buttons -->
+            <div class="header-actions">
+                <!-- Wishlist Trigger -->
+                <button onclick="openDrawer('wishlist-drawer')" class="icon-btn" title="Saved Items" aria-label="Wishlist">
+                    ❤️
+                    <span class="badge-count wishlist-count">0</span>
+                </button>
+
+                <!-- Cart Trigger -->
+                <button onclick="openDrawer('cart-drawer')" class="icon-btn" title="Cart" aria-label="Shopping Cart">
+                    🛒
+                    <span class="badge-count cart-count">0</span>
+                </button>
+
+                <a href="Login.php" class="btn btn-secondary btn-sm">Login</a>
+                <a href="register.php" class="btn btn-primary btn-sm">Register</a>
+                <a href="SellItem.php" class="btn btn-accent btn-sm" style="display: none; @media(min-width: 1024px){display: inline-flex;}">+ Sell Item</a>
+                
+                <button class="btn-mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle Menu">☰</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer Navigation -->
+    <div id="mobile-nav-menu" style="display: none; background: #fff; padding: 20px; border-bottom: 1px solid var(--border-subtle);">
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 14px;">
+            <li><a href="index.html" style="font-weight: 700; color: var(--primary);">Home</a></li>
+            <li><a href="Marketplace.php">Marketplace</a></li>
+            <li><a href="SellItem.php">Sell an Item</a></li>
+            <li><a href="Login.php">Student Login</a></li>
+            <li><a href="register.php">Create Account</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Body Content -->
+    <main class="page-main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div class="hero-content">
+                    <div class="hero-tag">
+                        <span>🎓 Exclusively for University & College Students</span>
                     </div>
-                    <div class="hero-meta">
-                        <div>
-                            <strong>Trusted by students</strong>
-                            <p>Secure, peer-to-peer marketplace.</p>
+                    <h1 class="hero-title">
+                        Buy, Sell & Exchange <br>
+                        <span class="highlight">Student Resources</span> with Ease.
+                    </h1>
+                    <p class="hero-subtitle">
+                        Get discounted textbooks, laptops, scientific calculators, dorm essentials and class notes directly from verified students on your campus.
+                    </p>
+                    
+                    <div class="hero-cta">
+                        <a href="SellItem.php" class="btn btn-primary btn-lg">🚀 Start Selling Free</a>
+                        <a href="Marketplace.php" class="btn btn-secondary btn-lg">Browse Marketplace</a>
+                    </div>
+
+                    <div class="hero-stats-row">
+                        <div class="stat-item">
+                            <span class="stat-num">5,000+</span>
+                            <span class="stat-label">Campus Listings</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num">12+</span>
+                            <span class="stat-label">Universities Connected</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-num">100%</span>
+                            <span class="stat-label">Peer-to-Peer</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="hero-visual">
-                    <img src="images/image.webp" alt="Students browsing marketplace">
-                </div>
-            </section>
-
-            <section id="categories" class="section-panel">
-                <div class="section-header">
-                    <div>
-                        <h2>Browse Categories</h2>
-                        <p>Find what you need in your category.</p>
-                    </div>
-                    <a href="Marketplace.php" class="link-small">View all</a>
-                </div>
-
-                <div class="category-grid">
-                    <article class="category-card">
-                        <img src="icons/textbooks.png" alt="Textbooks">
-                        <span>Textbooks</span>
-                    </article>
-                    <article class="category-card">
-                        <img src="icons/electronics.png" alt="Electronics">
-                        <span>Electronics</span>
-                    </article>
-                    <article class="category-card">
-                        <img src="icons/calculator.png" alt="Calculators">
-                        <span>Calculators</span>
-                    </article>
-                    <article class="category-card">
-                        <img src="icons/notes.png" alt="Notes">
-                        <span>Notes</span>
-                    </article>
-                    <article class="category-card">
-                        <img src="icons/service.png" alt="Services">
-                        <span>Services</span>
-                    </article>
-                    <article class="category-card">
-                        <img src="icons/hostel item.png" alt="Hostel Items">
-                        <span>Hostel Items</span>
-                    </article>
-                    <article class="category-card">
-                        <img src="icons/others.png" alt="Others">
-                        <span>Others</span>
-                    </article>
-                </div>
-            </section>
-
-            <section class="section-panel featured-panel">
-                <div class="section-header">
-                    <div>
-                        <h2>Featured Products</h2>
-                        <p>Handpicked deals from students</p>
-                    </div>
-                    <a href="Marketplace.php" class="link-small">View all</a>
-                </div>
-
-                <div class="featured-grid">
-                    <article class="product-card">
-                        <img src="images/calculus.jfif" alt="Calculus Textbook">
-                        <h3>Calculus Textbook</h3>
-                        <p>James Stewart</p>
-                        <span class="price">5,000 FCFA</span>
-                    </article>
-                    <article class="product-card">
-                        <img src="images/hp pavilion.webp" alt="HP Pavilion Laptop">
-                        <h3>HP Pavilion Laptop</h3>
-                        <p>Core i5, 8GB RAM</p>
-                        <span class="price">250,000 FCFA</span>
-                    </article>
-                    <article class="product-card">
-                        <img src="images/casio.webp" alt="Casio Calculator">
-                        <h3>Casio Scientific Calculator</h3>
-                        <p>FX-991EX</p>
-                        <span class="price">8,000 FCFA</span>
-                    </article>
-                    <article class="product-card">
-                        <img src="images/notes.jfif" alt="Engineering Notes">
-                        <h3>Engineering Notes</h3>
-                        <p>Complete set</p>
-                        <span class="price">3,000 FCFA</span>
-                    </article>
-                    <article class="product-card">
-                        <img src="images/earbuds.jfif" alt="Wireless Earbuds">
-                        <h3>Wireless Earbuds</h3>
-                        <p>Trusted quality</p>
-                        <span class="price">7,000 FCFA</span>
-                    </article>
-                </div>
-            </section>
-
-            <section class="stats-panel" id="about">
-                <article class="stat-card">
-                    <img src="icons/affordable.png" alt="Affordable">
-                    <h3>Affordable</h3>
-                    <p>Find quality items at student-friendly prices.</p>
-                </article>
-                <article class="stat-card">
-                    <img src="icons/trust.png" alt="Trust">
-                    <h3>Trusted</h3>
-                    <p>Verified student accounts for safe transactions.</p>
-                </article>
-                <article class="stat-card">
-                    <img src="icons/convinient.png" alt="Convenient">
-                    <h3>Convenient</h3>
-                    <p>Easy to buy, sell and connect on campus.</p>
-                </article>
-                <article class="stat-card">
-                    <img src="icons/community.webp" alt="Community">
-                    <h3>Community</h3>
-                    <p>Built by students for students.</p>
-                </article>
-            </section>
-        </main>
-
-        <footer id="contact" class="site-footer">
-            <div class="footer-top">
-                <div class="footer-about">
-                    <img src="logos/edumarket logo 2.png" alt="EduMarket Logo" class="footer-logo">
-                    <p>EduMarket is the leading student marketplace to buy, sell and exchange academic resources, electronics and more.</p>
-                </div>
-                <div class="footer-links">
-                    <div>
-                        <h3>Quick links</h3>
-                        <ul>
-                            <li><a href="#home">Home</a></li>
-                            <li><a href="Marketplace.php">Marketplace</a></li>
-                            <li><a href="#categories">Categories</a></li>
-                            <li><a href="#about">About Us</a></li>
-                            <li><a href="#contact">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3>Help</h3>
-                        <ul>
-                            <li><a href="#">How it works</a></li>
-                            <li><a href="#">Safety Tips</a></li>
-                            <li><a href="#">FAQ</a></li>
-                            <li><a href="#">Terms & Conditions</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3>Contact Us</h3>
-                        <p><strong>+237 6 12 34 56 78</strong></p>
-                        <p>info@edumarket.com</p>
-                        <p>littoral Region, Bonaberi</p>
+                <div class="hero-image-wrap">
+                    <img src="images/image.webp" alt="Students buying and selling on campus" class="hero-img-main">
+                    <div class="hero-floating-badge">
+                        <div class="floating-icon">🛡️</div>
+                        <div>
+                            <strong style="display:block; font-size: 0.95rem;">Verified Campus Trade</strong>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">Safe public meetups & instant deals</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2024 EduMarket. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#facebook"><img src="icons/facebook.png" alt="Facebook"></a>
-                    <a href="#instagram"><img src="icons/instagram.png" alt="Instagram"></a>
-                    <a href="#linkedin"><img src="icons/linkedin.jpg" alt="LinkedIn"></a>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categories" class="section section-alt">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <h2 class="section-title">Explore by Category</h2>
+                        <p class="section-desc">Find exactly what you need for your courses and hostel living.</p>
+                    </div>
+                    <a href="Marketplace.php" class="section-link">View All Categories →</a>
+                </div>
+
+                <div class="categories-grid">
+                    <a href="Marketplace.php?category=textbooks" class="category-card">
+                        <div class="category-icon-wrap">
+                            <img src="icons/textbooks.png" alt="Textbooks">
+                        </div>
+                        <span class="category-name">Textbooks</span>
+                        <span class="category-count">120+ Listings</span>
+                    </a>
+
+                    <a href="Marketplace.php?category=electronics" class="category-card">
+                        <div class="category-icon-wrap">
+                            <img src="icons/electronics.png" alt="Electronics">
+                        </div>
+                        <span class="category-name">Electronics</span>
+                        <span class="category-count">85+ Listings</span>
+                    </a>
+
+                    <a href="Marketplace.php?category=calculators" class="category-card">
+                        <div class="category-icon-wrap">
+                            <img src="icons/calculator.png" alt="Calculators">
+                        </div>
+                        <span class="category-name">Calculators</span>
+                        <span class="category-count">45+ Listings</span>
+                    </a>
+
+                    <a href="Marketplace.php?category=notes" class="category-card">
+                        <div class="category-icon-wrap">
+                            <img src="icons/notes.png" alt="Study Notes">
+                        </div>
+                        <span class="category-name">Study Notes</span>
+                        <span class="category-count">90+ Listings</span>
+                    </a>
+
+                    <a href="Marketplace.php?category=services" class="category-card">
+                        <div class="category-icon-wrap">
+                            <img src="icons/service.png" alt="Student Services">
+                        </div>
+                        <span class="category-name">Services</span>
+                        <span class="category-count">30+ Listings</span>
+                    </a>
+
+                    <a href="Marketplace.php?category=hostel" class="category-card">
+                        <div class="category-icon-wrap">
+                            <img src="icons/hostel item.png" alt="Hostel Items">
+                        </div>
+                        <span class="category-name">Hostel Items</span>
+                        <span class="category-count">65+ Listings</span>
+                    </a>
+
+                    <a href="Marketplace.php?category=others" class="category-card">
+                        <div class="category-icon-wrap">
+                            <img src="icons/others.png" alt="Others">
+                        </div>
+                        <span class="category-name">Others</span>
+                        <span class="category-count">50+ Listings</span>
+                    </a>
                 </div>
             </div>
-        </footer>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head">
+                    <div>
+                        <h2 class="section-title">Featured Campus Deals</h2>
+                        <p class="section-desc">Handpicked verified items from fellow students right now.</p>
+                    </div>
+                    <a href="Marketplace.php" class="section-link">Explore Marketplace →</a>
+                </div>
+
+                <div class="products-grid">
+                    <!-- Product 1 -->
+                    <div class="product-card">
+                        <div class="product-media">
+                            <img src="images/calculus.jfif" alt="Calculus Textbook">
+                            <span class="product-badge-condition">Like New</span>
+                            <button class="product-wishlist-btn" onclick="toggleWishlist(1, this)" title="Save to wishlist">❤️</button>
+                        </div>
+                        <div class="product-content">
+                            <span class="product-category-tag">Textbooks</span>
+                            <h3 class="product-title"><a href="ProductDetails.php?id=1">Calculus: Early Transcendentals (8th Ed)</a></h3>
+                            <p class="product-meta-desc">James Stewart — Pristine condition with step-by-step guides.</p>
+                            <div class="product-seller-info">
+                                <span class="seller-avatar">M</span>
+                                <span>Mefang P.</span>
+                                <span class="verified-icon" title="Verified Student">✓</span>
+                                <span style="margin-left: auto; font-size: 0.75rem; color: var(--text-light);">Univ. Douala</span>
+                            </div>
+                            <div class="product-footer-row">
+                                <span class="product-price">5,000 FCFA</span>
+                                <div class="product-card-actions">
+                                    <button onclick="openQuickView(1)" class="btn btn-secondary btn-card-action">Quick View</button>
+                                    <button onclick="addToCart(1)" class="btn btn-primary btn-card-action">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 -->
+                    <div class="product-card">
+                        <div class="product-media">
+                            <img src="images/hp pavilion.webp" alt="HP Pavilion Laptop">
+                            <span class="product-badge-condition">Used - Good</span>
+                            <button class="product-wishlist-btn" onclick="toggleWishlist(2, this)" title="Save to wishlist">❤️</button>
+                        </div>
+                        <div class="product-content">
+                            <span class="product-category-tag">Electronics</span>
+                            <h3 class="product-title"><a href="ProductDetails.php?id=2">HP Pavilion 15 (Core i5, 8GB RAM, SSD)</a></h3>
+                            <p class="product-meta-desc">Fast workstation for programming and university projects.</p>
+                            <div class="product-seller-info">
+                                <span class="seller-avatar">E</span>
+                                <span>Emmanuel K.</span>
+                                <span class="verified-icon" title="Verified Student">✓</span>
+                                <span style="margin-left: auto; font-size: 0.75rem; color: var(--text-light);">Univ. Buea</span>
+                            </div>
+                            <div class="product-footer-row">
+                                <span class="product-price">250,000 FCFA</span>
+                                <div class="product-card-actions">
+                                    <button onclick="openQuickView(2)" class="btn btn-secondary btn-card-action">Quick View</button>
+                                    <button onclick="addToCart(2)" class="btn btn-primary btn-card-action">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 -->
+                    <div class="product-card">
+                        <div class="product-media">
+                            <img src="images/casio.webp" alt="Casio FX-991EX Calculator">
+                            <span class="product-badge-condition">Like New</span>
+                            <button class="product-wishlist-btn" onclick="toggleWishlist(3, this)" title="Save to wishlist">❤️</button>
+                        </div>
+                        <div class="product-content">
+                            <span class="product-category-tag">Calculators</span>
+                            <h3 class="product-title"><a href="ProductDetails.php?id=3">Casio FX-991EX ClassWiz Calculator</a></h3>
+                            <p class="product-meta-desc">High-speed processor & 552 functions for exam use.</p>
+                            <div class="product-seller-info">
+                                <span class="seller-avatar">D</span>
+                                <span>Diane N.</span>
+                                <span class="verified-icon" title="Verified Student">✓</span>
+                                <span style="margin-left: auto; font-size: 0.75rem; color: var(--text-light);">Polytech</span>
+                            </div>
+                            <div class="product-footer-row">
+                                <span class="product-price">8,000 FCFA</span>
+                                <div class="product-card-actions">
+                                    <button onclick="openQuickView(3)" class="btn btn-secondary btn-card-action">Quick View</button>
+                                    <button onclick="addToCart(3)" class="btn btn-primary btn-card-action">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 -->
+                    <div class="product-card">
+                        <div class="product-media">
+                            <img src="images/notes.jfif" alt="Engineering Notes">
+                            <span class="product-badge-condition">New Summary</span>
+                            <button class="product-wishlist-btn" onclick="toggleWishlist(4, this)" title="Save to wishlist">❤️</button>
+                        </div>
+                        <div class="product-content">
+                            <span class="product-category-tag">Study Notes</span>
+                            <h3 class="product-title"><a href="ProductDetails.php?id=4">Civil Engineering Course Summaries & Past Qs</a></h3>
+                            <p class="product-meta-desc">Complete summary binder with verified worked solutions.</p>
+                            <div class="product-seller-info">
+                                <span class="seller-avatar">K</span>
+                                <span>Kevin T.</span>
+                                <span class="verified-icon" title="Verified Student">✓</span>
+                                <span style="margin-left: auto; font-size: 0.75rem; color: var(--text-light);">ENSTP</span>
+                            </div>
+                            <div class="product-footer-row">
+                                <span class="product-price">3,000 FCFA</span>
+                                <div class="product-card-actions">
+                                    <button onclick="openQuickView(4)" class="btn btn-secondary btn-card-action">Quick View</button>
+                                    <button onclick="addToCart(4)" class="btn btn-primary btn-card-action">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trust & Why Us Section -->
+        <section id="about" class="section section-alt">
+            <div class="container">
+                <div class="section-head" style="text-align: center; display: block; margin-bottom: 48px;">
+                    <h2 class="section-title">Why Students Choose EduMarket</h2>
+                    <p class="section-desc">Built especially to make university life affordable, connected, and hassle-free.</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-box">
+                        <div class="feature-icon-wrap">
+                            <img src="icons/affordable.png" alt="Affordable Prices">
+                        </div>
+                        <h3 class="feature-title">Student-Friendly Prices</h3>
+                        <p class="feature-desc">Save up to 70% on costly textbooks, laptops, and equipment compared to retail stores.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <div class="feature-icon-wrap">
+                            <img src="icons/trust.png" alt="Verified Students">
+                        </div>
+                        <h3 class="feature-title">Verified Student Profiles</h3>
+                        <p class="feature-desc">Trade with confidence knowing you are connecting with real peers from your campus.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <div class="feature-icon-wrap">
+                            <img src="icons/convinient.png" alt="Fast Campus Meetup">
+                        </div>
+                        <h3 class="feature-title">Convenient Campus Meetups</h3>
+                        <p class="feature-desc">Meet directly at campus libraries, cafeterias, or faculty lobbies without delivery fees.</p>
+                    </div>
+
+                    <div class="feature-box">
+                        <div class="feature-icon-wrap">
+                            <img src="icons/community.webp" alt="Supportive Community">
+                        </div>
+                        <h3 class="feature-title">Recycle & Support Peers</h3>
+                        <p class="feature-desc">Pass along study materials to junior students while earning extra pocket money.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="section">
+            <div class="container">
+                <div class="section-head" style="text-align: center; display: block; margin-bottom: 40px;">
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-desc">Got questions? We've got answers for you.</p>
+                </div>
+
+                <div class="faq-wrap">
+                    <div class="faq-item open">
+                        <div class="faq-question">
+                            <span>How do I list an item for sale on EduMarket?</span>
+                            <span class="faq-chevron">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            Simply create a free account or log in, click the <strong>"Sell an Item"</strong> button, fill in your product details (photos, price, description, and your campus), and your listing is live immediately!
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Is EduMarket free to use for students?</span>
+                            <span class="faq-chevron">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            Yes! EduMarket is completely free for student buyers and sellers to list, browse, and connect directly on campus.
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How do payments and item handoffs work?</span>
+                            <span class="faq-chevron">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            Buyers and sellers chat directly on WhatsApp or phone to agree on a public meetup location on campus (e.g. university library or student lounge) to inspect the item and complete payment via Mobile Money (OM/MOMO) or cash.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Slide-out Cart Drawer -->
+    <div id="drawer-overlay" class="drawer-overlay" onclick="closeDrawers()"></div>
+    
+    <div id="cart-drawer" class="drawer-panel">
+        <div class="drawer-head">
+            <h3 style="font-size: 1.2rem;">🛒 Shopping Cart</h3>
+            <button onclick="closeDrawers()" style="background: transparent; font-size: 1.3rem; cursor: pointer;">✕</button>
+        </div>
+        <div id="cart-drawer-body" class="drawer-body">
+            <!-- Dynamic Cart Items -->
+        </div>
+        <div class="drawer-footer">
+            <div style="display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 14px; font-size: 1.1rem;">
+                <span>Total:</span>
+                <span id="cart-total-price" style="color: var(--primary);">0 FCFA</span>
+            </div>
+            <a href="Marketplace.php" class="btn btn-primary btn-full" onclick="closeDrawers()">Continue to Marketplace</a>
+        </div>
     </div>
+
+    <!-- Slide-out Wishlist Drawer -->
+    <div id="wishlist-drawer" class="drawer-panel">
+        <div class="drawer-head">
+            <h3 style="font-size: 1.2rem;">❤️ Saved Items</h3>
+            <button onclick="closeDrawers()" style="background: transparent; font-size: 1.3rem; cursor: pointer;">✕</button>
+        </div>
+        <div id="wishlist-drawer-body" class="drawer-body">
+            <!-- Dynamic Wishlist Items -->
+        </div>
+    </div>
+
+    <!-- Quick View Modal -->
+    <div id="quickview-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close-btn" onclick="closeModal('quickview-modal')">✕</button>
+            <div id="quickview-modal-body">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <img src="logos/edumarket logo 2.png" alt="EduMarket" class="footer-logo">
+                    <p class="footer-about-text">
+                        The dedicated student marketplace platform for university students across campuses to trade academic essentials safely.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Quick Links</h4>
+                    <ul class="footer-nav">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="Marketplace.php">Marketplace</a></li>
+                        <li><a href="SellItem.php">Post a Listing</a></li>
+                        <li><a href="Login.php">Student Login</a></li>
+                        <li><a href="register.php">Create Account</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Categories</h4>
+                    <ul class="footer-nav">
+                        <li><a href="Marketplace.php?category=textbooks">Textbooks</a></li>
+                        <li><a href="Marketplace.php?category=electronics">Electronics & PCs</a></li>
+                        <li><a href="Marketplace.php?category=calculators">Calculators</a></li>
+                        <li><a href="Marketplace.php?category=notes">Course Notes</a></li>
+                        <li><a href="Marketplace.php?category=hostel">Hostel Gear</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="footer-heading">Campus Support</h4>
+                    <div class="footer-contact-item">
+                        <img src="icons/phone.png" alt="Phone" class="footer-contact-icon">
+                        <span>+237 6 90 12 34 56</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <img src="icons/Email icon.png" alt="Email" class="footer-contact-icon">
+                        <span>support@edumarket.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <img src="icons/Location icon.png" alt="Location" class="footer-contact-icon">
+                        <span>Bonaberi, Douala - Cameroon</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom-row">
+                <p>&copy; 2026 EduMarket. Designed for Students.</p>
+                <div class="footer-social-links">
+                    <a href="https://facebook.com" target="_blank" class="footer-social-btn"><img src="icons/facebook.png" alt="Facebook"></a>
+                    <a href="https://instagram.com" target="_blank" class="footer-social-btn"><img src="icons/instagram.png" alt="Instagram"></a>
+                    <a href="https://linkedin.com" target="_blank" class="footer-social-btn"><img src="icons/linkedin.jpg" alt="LinkedIn"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Core Scripts -->
+    <script src="app.js"></script>
 </body>
 </html>
